@@ -22,10 +22,14 @@ Let's be honest, the vsfs timetables are not the best, so I made my own app to d
 
 I find the website timetable very chaotic and poorly designed. My app is not much better, but I think it does better job at displaying it.
 
-<a href="https://www.vsfs.cz/">
-   <img src="https://cdn.discordapp.com/attachments/355715828513112064/1025165249525067806/unknown.png" alt="Logo" width="160" height="280">
-  <img src="https://cdn.discordapp.com/attachments/355715828513112064/1025166063698194462/unknown.png" alt="Logo" width="160" height="280">
-</a>
+<div align="center">
+  <a href="https://cdn.discordapp.com/attachments/355715828513112064/1025165249525067806/unknown.png">
+     <img src="https://cdn.discordapp.com/attachments/355715828513112064/1025165249525067806/unknown.png" alt="Logo" width="160" height="280">
+  </a>
+  <a href="https://cdn.discordapp.com/attachments/355715828513112064/1025166063698194462/unknown.png">
+    <img src="https://cdn.discordapp.com/attachments/355715828513112064/1025166063698194462/unknown.png" alt="Logo" width="160" height="280">
+  </a>
+</div>
 
 <!-- FEATURES -->
 ## App Features
