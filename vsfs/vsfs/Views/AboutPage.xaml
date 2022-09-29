@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vsfs.Views.AboutPage"
+             xmlns:vm="clr-namespace:vsfs.ViewModels"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="#ececec" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <ContentView Padding="0,10,0,10" VerticalOptions="FillAndExpand">
+                    <Image Source="vsfs.png" VerticalOptions="Center" HeightRequest="64" />
+                </ContentView>
+            </StackLayout>
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                <Label Text="Login to IS VSFS" FontSize="17"/>
+                <Entry Placeholder="Username" x:Name="name"/>
+                <Entry Placeholder="Password" IsPassword="True" x:Name="pass"/>
+                
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Frame HasShadow="False">
+                        <StackLayout>
+                            <Label Text="Stay signed in" FontSize="15" FontAttributes="Bold"/>
+                            <CheckBox x:Name="save"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame HasShadow="False" Grid.Column="1" IsVisible="false" x:Name="debugFrame">
+                        <StackLayout>
+                            <Label Text="Debug Mode Page" FontSize="15" FontAttributes="Bold"/>
+                            <CheckBox x:Name="debug"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+                
+                <Button Margin="0,10,0,0" Text="Login"
+                        Clicked="loginBtn"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                
+                <ActivityIndicator IsVisible="false" x:Name="loading"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

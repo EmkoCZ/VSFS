@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Padding="0,20,0,0"
+             x:Class="vsfs.Views.DebugOutput">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Debug Mode Output" FontSize="15" FontAttributes="Bold"/>
+            <!--<Frame BackgroundColor="#ffae57" Margin="5,10,230,0">
+                <Label Text="Probíhající hodina"/>
+            </Frame>-->
+
+            <ActivityIndicator IsVisible="false" x:Name="loading"/>
+
+            <!--<ScrollView Orientation="Horizontal" x:Name="scView">-->
+                <!--<Grid BackgroundColor="#03c6fc" Margin="0,50,0,0" ColumnSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="90"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Po" Grid.Row="0" Grid.Column="0" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White"/>
+                    <StackLayout Grid.Row="0" Grid.Column="1" BackgroundColor="#f7f7f7" Padding="5,5,0,0" Spacing="0">
+                        <Label Text="B_PrP/pAPH" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="Matematika 1" Grid.Row="0" Grid.Column="1"  FontAttributes="Bold"/>
+                        <Label Text="O. Čepek" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="E230" Grid.Row="0" Grid.Column="1"  FontSize="13" FontAttributes="Bold"/>
+                        <Label Text="13:00 - 14:00" Grid.Row="0" Grid.Column="1"  FontSize="13" HorizontalOptions="Center"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="0" Grid.Column="2" BackgroundColor="#ffae57" Padding="5,5,0,0" Spacing="0">
+                        <Label Text="B_PrP/pAPH" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="Principy počítačů" Grid.Row="0" Grid.Column="1"  FontAttributes="Bold"/>
+                        <Label Text="O. Čepek" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="E230" Grid.Row="0" Grid.Column="1"  FontSize="13" FontAttributes="Bold"/>
+                        <Label Text="13:00 - 14:00" Grid.Row="0" Grid.Column="1"  FontSize="13" HorizontalOptions="Center"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="0" Grid.Column="3" BackgroundColor="#ffae57" Padding="5,5,0,0" Spacing="0">
+                        <Label Text="B_PrP/pAPH" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="Tvorba webových stránek" Grid.Row="0" Grid.Column="1"  FontAttributes="Bold"/>
+                        <Label Text="O. Čepek" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="E230" Grid.Row="0" Grid.Column="1"  FontSize="13" FontAttributes="Bold"/>
+                        <Label Text="13:00 - 14:00" Grid.Row="0" Grid.Column="1"  FontSize="13" HorizontalOptions="Center"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="0" Grid.Column="4" BackgroundColor="#ffae57" Padding="5,5,0,0" Spacing="0">
+                        <Label Text="B_PrP/pAPH" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="Matematika" Grid.Row="0" Grid.Column="1"  FontAttributes="Bold"/>
+                        <Label Text="O. Čepek" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="E230" Grid.Row="0" Grid.Column="1"  FontSize="13" FontAttributes="Bold"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="0" Grid.Column="5" BackgroundColor="#ffae57" Padding="5,5,0,0" Spacing="0">
+                        <Label Text="B_PrP/pAPH" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="Matematika" Grid.Row="0" Grid.Column="1"  FontAttributes="Bold"/>
+                        <Label Text="O. Čepek" Grid.Row="0" Grid.Column="1"  FontSize="12"/>
+                        <Label Text="E230" Grid.Row="0" Grid.Column="1"  FontSize="13" FontAttributes="Bold"/>
+                    </StackLayout>
+                    <Label Text="Út" Grid.Row="1" Grid.Column="0" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White"/>
+                    <Label Text="Test4" Grid.Row="1" Grid.Column="1"/>
+                </Grid>-->
+            <!--</ScrollView>-->
+            <ScrollView Orientation="Both">
+                <Label x:Name="view"/>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html class="no-js auth" lang="cs">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="#00a442" name="msapplication-TileColor">
+<meta content="/pics/design/r6/favicon/rozvrh/browserconfig.xml" name="msapplication-config">
+<meta content="#ffffff" name="theme-color">
+<title>Rozvrh hodin</title>
+<link href="/css/r6/foundation.min.css?_v=acd451b" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/r/icons/foundation-icons.css?_v=d866a73" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/r6/prvky.css?_v=41f0c49" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/r6/r6.css?_v=13f2b2d" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/r6/motiv/10.css?_v=3a8eaa7" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/r6/r6-print.css?_v=f2d793c" media="print" rel="stylesheet" type="text/css">
+<style>@media screen and (max-width: 63.9375em) {
+	/* tady se uplatni .stack ~ uzka sirka monitora */
+	#rozvrh_tabulka td {
+		width: 100%;
+	}
+
+	#rozvrh_tabulka .mezera {
+		display: none;
+	}
+
+	#rozvrh_tabulka tr.multirow {
+		display: none;
+	}
+
+	#rozvrh_tabulka, #rozvrh_tabulka tr {
+		border-left: 0 !important;
+		border-right: 0 !important;
+	}
+
+	#rozvrh_tabulka td {
+		border-width: 0 0 2px !important;
+	}
+}
+
+@media screen and (min-width: 64em) {
+	#rozvrh_tabulka td {
+		display: table-cell; /* protoze data-tooltip nastavuje inline-block */
+	}
+
+	#rozvrh_tabulka tr.multirow-mobile {
+		display: none;
+	}
+}
+
+#rozvrh_tabulka td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#rozvrh_tabulka,
+#rozvrh_tabulka thead,
+#rozvrh_tabulka tbody,
+#rozvrh_tabulka tr,
+#rozvrh_tabulka th,
+#rozvrh_tabulka td {
+	border: none;
+	background: none;
+	border-collapse: collapse;
+}
+
+#rozvrh_tabulka thead th {
+	font-family: Roboto, Open Sans, Arial, sans-serif;
+	color: #787878;
+	font-size: 1.14285rem;
+	font-weight: 400;
+	padding-bottom: 0.35714rem;
+}
+#rozvrh_tabulka tbody tr:not(.multirow-mobile) {
+	border-right: 1px solid #d9e5f1;
+}
+#rozvrh_tabulka tbody tr td {
+	border-top: 1px solid #d9e5f1;
+	border-bottom: 1px solid #d9e5f1;
+	padding: .5rem .71429rem;
+}
+#rozvrh_tabulka tbody tr.den-horni-radek td.seminar {
+	border-bottom-color: #bad1e7;
+}
+#rozvrh_tabulka tbody th {
+	background-color: var(--barva1);
+	color: #fff;
+	font-weight: 500;
+	font-size: 1.57142rem;
+}
+#rozvrh_tabulka tbody tr:not(.multirow-mobile) th {
+	border: 1px solid #d9e5f1;
+	border-left: none;
+}
+
+#rozvrh_tabulka tbody tr:not(.multirow-mobile) th.prave_probiha {
+	border-color: var(--barva9);
+}
+
+#rozvrh_tabulka tbody th .rozvrh_den_datum {
+	display: block;
+	font-size: .85714rem;
+	font-weight: 400;
+}
+#rozvrh_tabulka .has-tip {
+	position: static;
+}
+#rozvrh_tabulka td.prednaska,
+#app_content .legenda > div.prednaska::before {
+	background-color: var(--bgbarva-seda1);
+}
+#rozvrh_tabulka td.seminar,
+#app_content .legenda > div.seminar::before {
+	background-color: #deeafb;
+}
+#rozvrh_tabulka td.eucebna,
+#app_content .legenda > div.eucebna::before {
+	background-color: #E4F382;
+}
+#rozvrh_tabulka th.prave_probiha,
+#rozvrh_tabulka td.prave_probiha,
+#app_content .legenda > div.prave_probiha::before {
+        background-color: var(--barva9);
+}
+#rozvrh_tabulka th.prave_probiha {
+	color: #3a3a3a;
+}
+#rozvrh_tabulka .rezervace,
+#app_content .legenda > div.rezervace::before {
+	background-color: #f3ffeb;
+}
+#rozvrh_tabulka td.mezera[colspan="12"] {
+	border: 1px solid #d9e5f1;
+}
+#rozvrh_tabulka td.seminar + td.seminar,
+#rozvrh_tabulka td.seminar + td.prednaska,
+#rozvrh_tabulka td.prednaska + td.seminar,
+#rozvrh_tabulka td.prednaska + td.prednaska,
+#rozvrh_tabulka .zacina_presne {
+	border-left: 1px solid #d9e5f1;
+}
+#rozvrh_tabulka .konci_presne {
+	border-right: 1px solid #d9e5f1;
+}
+
+#rozvrh_tabulka tbody td > span {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: block;
+}
+#rozvrh_tabulka .cas_od_do {
+	font-weight: 600;
+	font-size: 0.85714rem;
+}
+#rozvrh_tabulka .predmet_kod a {
+	font-family: Roboto, Open Sans, Arial, sans-serif;
+	color: #287bbf;
+	font-size: 0.85714rem;
+}
+
+#rozvrh_tabulka .predmet_nazev {
+	font-weight: 500;
+	margin: 0.28571rem 0 0.28571rem 0;
+	max-width: 100%;
+	display: inline-block;
+}
+
+#rozvrh_tabulka .poznamka .predmet_nazev {
+	max-width: calc(100% - 17px);
+}
+
+#rozvrh_tabulka .nepravidelnost_poznamka, #rozvrh_tabulka .spv_hvezdicka {
+	color: #fff;
+	text-align: center;
+	font-weight: 500;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 0;
+	line-height: 19px;
+	margin-left: 3px;
+	margin-bottom: 10px;
+}
+
+#rozvrh_tabulka .nepravidelnost_poznamka {
+	background-color: #7caf5d;
+}
+
+#rozvrh_tabulka .spv_hvezdicka {
+	background-color: var(--barva7);
+}
+
+#rozvrh_tabulka td .predmet_nazev:first-child {
+	margin-top: 1.78571rem;
+}
+
+#rozvrh_tabulka .mistnost_oznaceni,
+#rozvrh_tabulka .mistnost_oznaceni a {
+	font-size: 0.85714rem;
+	color: #575757;
+}
+
+#rozvrh_tabulka .ucitele {
+	font-size: 80%;
+}
+#rozvrh_tabulka .den-horni-radek:not(:first-child) td {
+    border-top: 2px solid #c1d6eb !important;
+}
+
+#rozvrh_tabulka a.online {
+	font-weight: 600;
+	color: #7f0000;
+}
+
+.rozvrh_doplnujici_moznosti select[name="tyden"] {
+	max-width: 20em;
+}
+
+.rozvrh_doplnujici_moznosti input.datum_uzky {
+	display: inline-block;
+	max-width: 10em;
+}
+
+.volby_husteji label {
+	margin-bottom: 0;
+	min-height: auto;
+}
+
+#app_content .legenda > div.prednaska::before,
+#app_content .legenda > div.seminar::before,
+#app_content .legenda > div.prave_probiha::before,
+#app_content .legenda > div.rezervace::before,
+#app_content .legenda > div.poznamka::before,
+#app_content .legenda > div.spv::before {
+	content: '';
+	display: block;
+	float: left;
+	width: 2rem;
+	height: 2rem;
+	margin-right: 1rem;
+	border: 1px solid #d9e5f1;
+}
+#app_content .legenda > div.prednaska i,
+#app_content .legenda > div.seminar i,
+#app_content .legenda > div.prave_probiha i,
+#app_content .legenda > div.rezervace i,
+#app_content .legenda > div.poznamka i,
+#app_content .legenda > div.spv i {
+	display: none;
+}
+#app_content .legenda > div.registrovano i,
+#app_content .legenda > div.navic i,
+#app_content .legenda > div.zakazano i,
+#rozvrh_tabulka .registrovano i,
+#rozvrh_tabulka .navic i {
+	border-radius: 50%;
+	float: left;
+	margin-right: 1rem;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	display: block;
+	margin-top: 3px;
+	color: #fff;
+	font-size: 22px;
+}
+#app_content .legenda > div.zakazano i {
+	/* prepis defaultnich stylu, at to vypada stejne jako nezakazane prvky legendy */
+	border-radius: 0;
+	width: 2rem;
+	height: 2rem;
+	line-height: 2rem;
+	font-size: 2rem;
+	margin-top: 0;
+}
+#rozvrh_tabulka .registrovano .ikona-v-rohu,
+#rozvrh_tabulka .navic .ikona-v-rohu {
+	margin: -5px -.5rem 0 0;
+	display: block;
+}
+#rozvrh_tabulka .registrovano.navic .ikona-v-rohu + .ikona-v-rohu {
+	margin-right: 2px;
+}
+#rozvrh_tabulka .registrovano .ikona-v-rohu i,
+#rozvrh_tabulka .navic .ikona-v-rohu i {
+	width: 17px;
+	height: 17px;
+	line-height: 18px;
+	font-size: 14px;
+	margin-right: 0;
+}
+#app_content .legenda > div.poznamka::before,
+.tooltip.rozvrh-tooltip .poznamka_vysvetleni::before {
+	/* spolecne barvy pro hvezdicku v tooltipu na hover i v legende */
+	content: '*';
+	background-color: #7caf5d;
+	color: #fff;
+	text-align: center;
+	font-weight: 500;
+}
+/* navic v tooltipu to jeste musim odsadit a kdesi cosi */
+.tooltip.rozvrh-tooltip .poznamka_vysvetleni::before {
+	margin-right: 0.3rem;
+	padding: 0 0.3rem;
+}
+#app_content .legenda div.spv::before {
+	content: '*';
+	color: #fff;
+	text-align: center;
+	font-weight: 500;
+}
+#app_content .legenda > div.registrovano i { background: #c91717; }
+#app_content .legenda > div.navic i { background: #fc9603; }
+#app_content .legenda > div.zakazano i { background: #ccc; }
+
+#app_content .legenda > div.toggle-switch::before,
+#app_content .legenda > div.toggle-switch i {
+	cursor: pointer;
+}
+
+#sync_token_modal .input-group {
+	margin-top: 0.5rem;
+}
+
+#sync_token_modal input {
+	/* nechci, aby input vypadal jako readonly, i kdyz je */
+	background: #fefefe;
+	cursor: text;
+}
+
+.tooltip.rozvrh-tooltip {
+	max-width: 30rem;
+}
+.tooltip.rozvrh-tooltip.left {
+	pointer-events: none;
+}
+.tooltip .tooltip_registrovano,
+.tooltip .tooltip_navic {
+	color: #fff;
+	margin: -.85714rem -1.28571rem 0 -1.28571rem;
+	padding: .5rem 1.28571rem;
+}
+.tooltip .tooltip_registrovano + .tooltip_navic {
+	margin-top: 0px;
+}
+.input-group-ico-buttons-box {
+	display: flex;
+	flex-wrap: wrap;
+}
+.input-group-ico-buttons-box .input-group {
+	margin-right: 1.5rem;
+	width: auto;
+}
+@media screen and (max-width: 39.9375em) {
+	.input-group-ico-buttons-box .input-group {
+		margin-right: .7rem;
+	}
+}
+.input-group-ico-buttons-box .input-group:last-child {
+	margin-right: 0;
+}
+.input-group-ico-buttons-box .input-group .input-group-label {
+	border: none;
+	font-size: 1.71428rem;
+	padding: 0 0.5rem;
+}
+.input-group-ico-buttons-box .input-group .input-group-label.secondary {
+	background: #c8c8c8;
+	color: #fff;
+}
+.input-group-ico-buttons-box .input-group.active .input-group-label {
+	background: #e5ba05;
+	color: #fff;
+}
+.input-group-ico-buttons-box .input-group.active .button, .button.active, .button.active:focus {
+	background: #fccd06;
+	color: #333;
+}
+.input-group-ico-buttons-box .input-group.active .button:hover, .button.active:hover {
+	background: #e5ba05;
+}
+
+/* kalendar */
+#kalendar table {
+	margin-bottom: 0; /* nevhodna vlastnost zdedena z obecneho stylu */
+}
+
+#kalendar .has-tip {
+	border-bottom: 0; /* tooltip nesmi zpusobit pridani borderu, jinak se posouvaji udalosti o pixel */
+}
+
+/* kalendarove barvy */
+/* prepisu taky barvu pozadi hlavicky pro aktualni den */
+.fc .fc-row .fc-content-skeleton td.fc-day-top.fc-today {
+	background-color: #fccd06; /* .bgbarva9 */
+}
+
+/* defaultní event */
+.fc-event, .legenda .cal::before {
+        background-color: #d9e5f1;
+}
+
+/* udalosti z Vyvesky 5_1 barva1 */
+/* zkousky 6_1 barva3 */
+/* odevzdavarny 6_2 barva7 */
+/* odpovedniky 6_3 barva6 */
+/* obdobi 6_4: barva5 */
+/* rozvrh 8_1 a 8_2 bgbarva2 */
+/* svatky 6_5 */
+.fc-event.ev_neutralni, .legenda .cal.ev_neutralni::before {
+	background-color: #5a5a5a;
+}
+/* moje rezervace 8_3 cal-bgbarva12 */
+.cal-bgbarva12, .legenda > .cal-bgbarva12::before {
+	color: #037f1a !important;
+	background: #c8e9b3 !important;
+}
+.legenda > .cal-bgbarva12 {
+	color: #3a3a3a !important; /* v legendě nechceme zelený text */ 
+}
+
+/* e-ucebna 8_4 cal-bgbarva22 */
+.cal-bgbarva22, .legenda > .cal-bgbarva22::before {
+	background-color: #c8e600 !important;
+	color: #555 !important;
+}
+
+/* studentská e-ucebna 8_5 cal-bgbarva23 */
+.cal-bgbarva23, .legenda > .cal-bgbarva23::before {
+	background-color: #fff !important;
+	color: #555 !important;
+	background-image: linear-gradient(135deg, #ffffff 25%, #c8e600 25%, #c8e600 50%, #ffffff 50%, #ffffff 75%, #c8e600 75%, #c8e600 100%);
+	background-size: 8.49px 8.49px;
+}
+
+
+.fc-list-item[class*='bgbarva'] {
+	background-color: transparent !important;
+}
+
+/* TMAVÝ MOTIV 992 */
+.motiv-992 .input-group-ico-buttons-box .input-group .input-group-label.secondary {
+	background: #242424;
+}
+
+.motiv-992 .input-group-ico-buttons-box .input-group.active .input-group-label.secondary {
+        background: #e5ba05;
+}
+</style>
+<link href="/css/r6/fullcalendar.css?_v=4eb0d37" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/r6/foundation-datepicker.min.css?_v=8c819e4" media="screen" rel="stylesheet" type="text/css">
+<link href="/pics/design/r6/favicon/rozvrh/site.webmanifest" rel="manifest">
+<link href="/pics/design/r6/favicon/rozvrh/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link color="#00a442" href="/pics/design/r6/favicon/rozvrh/safari-pinned-tab.svg" rel="mask-icon">
+<link href="/css/r6/form/tisk.css?_v=1fa0ee7" media="screen" rel="stylesheet" type="text/css">
+<script src="/js/r6/jquery.js?_v=3736f12"></script>
+<script src="/js/error.js?_v=e23fead"></script>
+<script src="/js/r6/foundation.js?_v=28992bc"></script>
+<script src="/js/r6/foundation-datepicker.min.js?_v=39b0f45"></script>
+</head>
+<body class="cs auth skola_64 motiv-10 motiv-svetly">
+<a href="#left_menu" class="show-on-focus print-hide">Přeskočit na hlavní menu</a><a href="#sticky_panel" class="show-on-focus print-hide">Přeskočit na horní lištu</a><a href="#hlavicka" class="show-on-focus print-hide">Přeskočit na hlavičku</a><a href="#app_menu_items" class="show-on-focus print-hide">Přeskočit na aplikační menu</a><a href="#app_content" class="show-on-focus print-hide">Přeskočit na obsah</a><a href="#paticka" class="show-on-focus print-hide">Přeskočit na patičku</a>
+<div id="content" class="left_menu_enabled">
+	<div id="zdurazneni-sticky" class="zdurazneni-sticky print-hide" role="alert" aria-atomic="true"></div>
+	<div id="rows_wrapper">
+		<div class="foundation-design-z">
+			<nav id="sticky_panel" >
+	<div class="row">
+		<div class="column">
+			<div class="ikony">
+				
+				<a href="#" class="sticky-icon show-for-1280-only float-right" data-toggle="header_menu" title="Hlavní menu" aria-label="Hlavní menu"><i class="isi-menu" aria-hidden="true"></i></a><nav id="header_menu" class="dropdown-pane bottom" data-dropdown data-close-on-click="true">
+	<ul class="items">
+		<li class="ikony">
+			<a href="/auth/rozvrh/zobraz/muj?fakulta=6410;obdobi=65;lang=en;setlang=en" class="sticky-item prepinac-jazyk jazyk-en" aria-label="switches IS into English" title="switches IS into English" >EN</a>
+			<a href="/auth/osoba/38643" class="jmeno_small show-for-small-only">
+	Nejedlý, M.
+</a>
+			<a href="#" title="Odhlášení ze systému" class="sticky-icon is-logout-menu show-for-small-only">
+				<i class="isi-power" aria-hidden="true"></i>
+				<span class="show-for-sr">Odhlášení ze systému</span>
+			</a>
+		</li>
+		<li class="noitem">
+			<a href="/auth/?fakulta=6410;obdobi=65" class="domu">Domů <i class="isi-home isi-inline" aria-hidden="true"></i></a>
+			
+		</li>
+		<li class="noitem"><label class="moje_apl">Moje aplikace<a href="#" class="toggle_edit_mode"><i class="isi-nastaveni isi-inline" title="Upravit menu" aria-hidden="true"></i></a></label></li>
+		<li class="system" role="none"><a href="/auth/mail/" role="menuitem" class="">Pošta<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/calendar/" role="menuitem" class="">Kalendář<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/student/" role="menuitem" class="">Student<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/predmety/" role="menuitem" class="">Předměty<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/studium_spolec/" role="menuitem" class="">Studium<i class="menu_icon"></i></a></li>
+		
+	</ul>
+</nav><a href="#" class="sticky-icon show-for-medium float-right" data-toggle="header_oblibene" title="Oblíbené" aria-label="Oblíbené"><i class="isi-hvezdicka" aria-hidden="true"></i></a><div id="header_oblibene" class="dropdown-pane bottom" data-dropdown data-close-on-click="true">
+	<div id="oblibene" class="oblib_sled">
+		<h5 class="barva4">S hvězdičkou</h5>
+		<div id="oblibene_loading" data-loading-size="medium">
+		</div>
+	</div>
+	<div id="sledovane" class="oblib_sled">
+		<h5 class="barva3"><a href="/auth/udalosti/nastav_log?fakulta=6410;obdobi=65">Sledované</a></h5>
+		<div id="sledovane_loading" data-loading-size="medium">
+		</div>
+		<ul class="vertical menu">
+		</ul>
+	</div>
+</div><a href="#" class="sticky-icon prepinac-vyhl float-right" title="Vyhledávání" aria-label="Vyhledávání" data-toggle="is_search"><i class="isi-lupa" aria-hidden="true"></i></a><div id="is_search" class="dropdown-pane bottom search-dropdown" data-dropdown data-close-on-click="true">
+	<form method="POST" action="/auth/vyhledavani/" role="search">
+		<div class="input-group">
+			<input class="input-group-field input_text" type="search" name="search" autocomplete="off" role="searchbox">
+			<div id="is_search_x" class="is_input_x input-group-button"><i class="isi-x"></i></div>
+			<div class="input-group-button">
+				<input type="submit" class="button" value="Vyhledat">
+			</div>
+		</div>
+	</form>
+	<div id="is_search_results"></div>
+</div><span style="display: none;"><a id="male_vyhledavani_reklamace_otevrit" data-open="vyhledavani_reklamace" class="button">Nenašli jste, co jste hledali?</a></span><div class="reveal" id="vyhledavani_reklamace" data-reveal data-append-to=".foundation-design-z:first">
+				<h2>Nenašli jste, co jste hledali?</h2>
+				<div class="nedurazne">
+					<h3 class="subheader">Hledaný výraz: <em id="vyhledavani_reklamace_hledany_vyraz"></em></h3>
+				</div>
+
+				<label>
+					<textarea rows="8" cols="80" placeholder="Očekával jsem, že najdu..."></textarea>
+				</label>
+				<div id="vyhledavani_reklamace_bottom" class="row">
+					<div class="column small-2 left">
+						<input type="button" id="vyhledavani_reklamace_odeslat" value="Odeslat" class="button">
+					</div>
+					<div class="colum small-10 right">
+						<div class="zdurazneni potvrzeni"><h3>Úspěšně uloženo. (<span id="vyhledavani_reklamace_countdown">0</span>)</h3></div>
+						<div class="zdurazneni chyba nelze_ulozit"><h3>Nelze uložit. Zkuste to prosím později.</h3></div>
+						<div class="zdurazneni chyba min_delka"><h3>Minimální povolená délka reklamace je 3 znaky.</h3></div>
+					</div>
+				</div>
+
+				<button class="close-button" data-close type="button" aria-label="Zavřít">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div><span class="hide-for-1280-only"><a href="/auth/rozvrh/zobraz/muj?fakulta=6410;obdobi=65;lang=en;setlang=en" class="sticky-item prepinac-jazyk jazyk-en" aria-label="switches IS into English" title="switches IS into English" >EN</a></span><a href="/auth/osoba/38643" class="jmeno sticky-item show-for-medium">	Marek Nejedlý, učo&nbsp;38643</a><a href="#" class="sticky-icon is-logout float-right show-for-medium" title="Odhlášení ze systému" data-toggle="is_logout">
+		<i class="isi-power" aria-hidden="true"></i>
+		<span class="show-for-sr">Odhlášení ze systému</span>
+	</a>
+<div id="is_logout" class="dropdown-pane bottom" data-dropdown data-close-on-click="true">
+	<form data-abide novalidate method="post" enctype="application/x-www-form-urlencoded" action="/auth/system/logout.pl"><INPUT TYPE=hidden NAME="fakulta" VALUE="6410"><INPUT TYPE=hidden NAME="obdobi" VALUE="65"><div class="row">
+	<div class="column"><button id="prvek_4320924" class="expanded button" type="submit" name="odhlasit" value="1">Odhlásit se</button><div class="odhlasit_vse"><label class="validator-group-content" for="odhlasit_vse"><input id="odhlasit_vse" name="odhlasit_vse" type="checkbox" value="1">odhlásit i z jiných počítačů</label><span class="form-error" data-form-error-for="odhlasit_vse"><span class="form-error-text"></span></span></div></div>
+</div>
+</form>
+</div>
+			</div>
+		</div>
+	</div>
+</nav>
+			<div class="row">
+	<div class="column">
+		<div id="left_menu_wrap">
+			<div id="left_menu_offset_wrap">
+				<nav id="left_menu" aria-label="Hlavní menu" role="navigation" class="hide-for-1280-only">
+					<div class="items" role="menubar">
+						<div>
+							<a href="/auth/" role="menuitem" class="domu">Domů <i class="isi-home isi-inline" aria-hidden="true"></i></a>
+						</div>
+						
+						
+						<div class="moje_apl_wrap"><a href="#" class="toggle_edit_mode menu_icon"><i class="isi-nastaveni isi-inline" title="Upravit menu" aria-hidden="true"></i></a><label class="moje_apl">Moje aplikace</label></div>
+						<ul class="tags" role="menubar" aria-label="Odkazy hlavního menu">
+							<li class="system" role="none"><a href="/auth/mail/" role="menuitem" class="">Pošta<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/calendar/" role="menuitem" class="">Kalendář<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/student/" role="menuitem" class="">Student<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/predmety/" role="menuitem" class="">Předměty<i class="menu_icon"></i></a></li><li class="system" role="none"><a href="/auth/studium_spolec/" role="menuitem" class="">Studium<i class="menu_icon"></i></a></li>
+						</ul>
+						<div class="add"><a href="#" aria-label="Přidat"><i class="isi-plus isi-inline" title="Přidat" aria-hidden="true"></i></a></div>
+						<div class="buttons">
+							<button class="reset button secondary small" data-tooltip data-show-on="all" title="Obnoví implicitní položky menu.">Reset</button>
+							<button class="hotovo button small">Hotovo</button>
+						</div>
+						
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+			<header class="row hlavicka" id="hlavicka">
+	<div class="small-5 medium-3 columns znak skola64">
+		<a href="/auth/" class="stitek skola_64" title="Informační systém Vysoké školy finanční a správní" aria-label="Informační systém Vysoké školy finanční a správní"></a>
+	</div>
+	<div id="is-prepinace" class="small-7 medium-9 columns">
+		
+		<div id="prepinace">
+        <ul aria-hidden="true" class="is-switch dropdown menu" data-dropdown-menu data-click-open="true" data-closing-time="0" data-autoclose="false" data-disable-hover="true" data-close-on-click="true" data-force-follow="false" data-close-on-click-inside="false" data-alignment="right">
+                
+                
+                <li>
+	<a href="#">zima 2022</a>
+	<ul class="menu">
+		<form>
+		<INPUT TYPE=hidden NAME="fakulta" VALUE="6410">
+		<li><button class="no-design vyber_obd_small leto2023 verejne1 obvykly1" type="submit" name="obdobi" value="66"><a>léto 2023</a></button></li><li><button class="no-design vyber_obd_small zima2022 verejne1 obvykly1 vybrane" type="submit" name="obdobi" value="65"><a>zima 2022</a></button></li><li><button class="no-design vyber_obd_small leto2022 verejne1 obvykly1" type="submit" name="obdobi" value="64"><a>léto 2022</a></button></li><li><button class="no-design vyber_obd_small zima2021 verejne1 obvykly1" type="submit" name="obdobi" value="63"><a>zima 2021</a></button></li><li><button class="no-design vyber_obd_small leto2021 verejne1 obvykly1" type="submit" name="obdobi" value="62"><a>léto 2021</a></button></li><li><button class="no-design vyber_obd_small zima2020 verejne1 obvykly1" type="submit" name="obdobi" value="61"><a>zima 2020</a></button></li><li><button class="no-design vyber_obd_small leto2020 verejne1 obvykly1" type="submit" name="obdobi" value="60"><a>léto 2020</a></button></li><li><button class="no-design vyber_obd_small zima2019 verejne1 obvykly1" type="submit" name="obdobi" value="59"><a>zima 2019</a></button></li><li><button class="no-design vyber_obd_small leto2019 verejne1 obvykly1" type="submit" name="obdobi" value="58"><a>léto 2019</a></button></li><li><button class="no-design vyber_obd_small zima2018 verejne1 obvykly1" type="submit" name="obdobi" value="57"><a>zima 2018</a></button></li><li aria-hidden="true"><hr aria-hidden="true"></li><li><button class="no-design " type="submit" name="obdobi" value="-"><a>vybrat i ze starších období</a></button></li>
+		<li class="zapamatat_li">
+	<div class="zapamatat">
+		<label for="zapamatat_obdobi">
+			<input id="zapamatat_obdobi" type="checkbox" name="save_obd_pref" value="1" checked="checked">
+			zapamatovat výběr
+		</label>
+	</div>
+</li>
+
+		</form>
+	</ul>
+</li>
+        </ul>
+        <ul class="show-for-sr">
+                
+                
+                <li><a href="./muj?fakulta=6410;obdobi=-">Změnit období zima 2022</a></li>
+        </ul>
+</div>
+	</div>
+</header>
+<div class="row" aria-hidden="true">
+	<div class="column">
+		<a href="#" class="app_header_motiv_switch show-for-medium" title="Změna motivu" aria-label="Změna motivu" data-open="motiv_reveal"><i class="isi-nastaveni isi-inline" aria-hidden="true"></i></a>
+		
+	</div>
+</div><div id="drobecky" class="row">
+	<div class="column">
+		<span class="wrap"><a href="/auth/" accesskey="0" title="Informační systém VŠFS" class="drobecek_logo"> </a><span class="sep"> <i class="isi-zobacek-vpravo"></i><span class="show-for-sr">&gt;</span> </span><a href="/auth/rozvrh/" accesskey="1">Rozvrh hodin</a><span class="sep last"> <i class="isi-zobacek-vpravo"></i><span class="show-for-sr">&gt;</span> </span><a href="/auth/rozvrh/zobraz/muj" class="drobecek_app" accesskey="2">Rozvrh hodin</a> <a class="pin_red" title="Přidat tuto aplikaci mezi MOJE APLIKACE" aria-label="Přidat tuto aplikaci mezi MOJE APLIKACE"><i class="isi-pripinacek sponka" aria-hidden="true"></i></a></span>
+	</div>
+</div><div id="app_header_wrapper" class="row align-justify show-for-medium">
+	<div class="medium-12 column">
+		<h1 id="app_header">
+	<div class="large-9 xlarge-9">
+		<span id="app_name">Rozvrh hodin </span>
+	</div>
+</h1>
+	</div>
+	<div class="shrink column">
+		<div id="app_header_image"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="column">
+		<div id="app_menu" class="">
+			<nav role="navigation" id="app_menu_items" aria-label="Aplikační menu">
+	<a href="/auth/rozvrh/zobraz/muj?fakulta=6410;obdobi=65" class="polozka app-menu-hidden active isi-kalendar-2" role="menuitem">Můj rozvrh</a><a href="/auth/calendar?fakulta=6410;obdobi=65" class="polozka app-menu-hidden isi-kalendar" role="menuitem">Můj kalendář</a><a href="/auth/rozvrh/dalsi_rozvrhy?fakulta=6410;obdobi=65" class="polozka app-menu-hidden" role="menuitem">Další rozvrhy a rezervace</a><a href="/auth/rozvrh/prehledy_statistiky?fakulta=6410;obdobi=65" class="polozka app-menu-hidden" role="menuitem">Přehledy a statistiky</a>
+	<ul role="menu" aria-label="Další položky" class="dropdown menu" data-dropdown-menu id="app_menu_small" data-disable-hover="true" data-autoclose="false" data-click-open="true">
+		<li>
+			<a href="#">Více</a>
+			<ul class="menu">
+				<li class='polozka_parent'><a href="/auth/rozvrh/zobraz/muj?fakulta=6410;obdobi=65" class="polozka app-menu-hidden active isi-kalendar-2" role="menuitem">Můj rozvrh</a></li><li class='polozka_parent'><a href="/auth/calendar?fakulta=6410;obdobi=65" class="polozka app-menu-hidden isi-kalendar" role="menuitem">Můj kalendář</a></li><li class='polozka_parent'><a href="/auth/rozvrh/dalsi_rozvrhy?fakulta=6410;obdobi=65" class="polozka app-menu-hidden" role="menuitem">Další rozvrhy a rezervace</a></li><li class='polozka_parent'><a href="/auth/rozvrh/prehledy_statistiky?fakulta=6410;obdobi=65" class="polozka app-menu-hidden" role="menuitem">Přehledy a statistiky</a></li>
+			</ul>
+		</li>
+	</ul>
+</nav>
+
+		</div>
+	</div>
+</div><!--[if lt IE 9]><div class="zdurazneni varovani ie_warning"  ><h3 class="zdurazneni-nadpis">Varování:</h3><h3>Váš prohlížeč Internet Explorer je zastaralý.</h3><p>Jsou známa bezpečnostní rizika a prohlížeč možná nedokáže zobrazit všechny prvky této a dalších webových stránek.</p></div>
+<![endif]-->
+		</div>
+		<div id="app_content_row" class="row"><main id="app_content" class="column" role="main"><div class="row dulezite_volby">
+		<div class="column small-12 large-expand">
+			<h2 class="float-left nadpis-sekce">Můj rozvrh</h2>
+		</div>
+		<div class="column small-12 large-expand shrink input-group-ico-buttons-box">
+			<div class="input-group active">
+				<span class="input-group-label secondary" aria-hidden="true"><i class="isi-rozvrh-tyden"></i></span>
+				<div class="input-group-button">
+					<a class="use-loader button secondary" href="./muj?fakulta=6410;obdobi=65;mz=1;vcuc=1">Celý rozvrh</a>
+				</div>
+			</div>
+			<div class="input-group">
+				<span class="input-group-label secondary" aria-hidden="true"><i class="isi-postava-rozvrh"></i></span>
+				<div class="input-group-button">
+					<a class="use-loader button secondary" href="./muj?fakulta=6410;obdobi=65;mz=1;bv=t;vcuc=1">Aktuální týden</a>
+				</div>
+			</div>
+			<div class="input-group">
+				<span class="input-group-label secondary" aria-hidden="true"><i class="isi-seznam"></i></span>
+				<div class="input-group-button">
+					<a class="button secondary" data-open="prvek_9541312">Možnosti zobrazení</a>
+				</div>
+			</div>
+		</div>
+	</div><table id="rozvrh_tabulka" WIDTH="100%" CELLSPACING="0" CELLPADDING="2" border style="table-layout: fixed;" class="striktni stack"><thead>
+<TR>	<TH WIDTH="4%">&nbsp;</TH><th COLSPAN="21" WIDTH="16%">8:45</th><th COLSPAN="21" WIDTH="16%">10:30</th><th COLSPAN="21" WIDTH="16%">12:15</th><th COLSPAN="21" WIDTH="16%">14:00</th><th COLSPAN="21" WIDTH="16%">15:45</th><th COLSPAN="21" WIDTH="16%">17:30</th></TR>
+</thead>
+<TR class="multirow den-horni-radek">	<TH ROWSPAN="2">Po</TH>
+	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_Ma_1/pxAEKFPH<br><strong>Matematika 1</strong><br>E. Ulrychová<br>E230<br>08:45&ndash;09:29" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 08:45&ndash;09:29 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 08:45&ndash;09:29">08:45&ndash;09:29</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_Ma_1" aria-label="Kód předmětu: B_Ma_1/pxAEKFPH">B_Ma_1/pxAEKFPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Matematika 1">Matematika 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=721" aria-label="Místnost: E230">E230</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_Ma_1/pxAEKFPH<br><strong>Matematika 1</strong><br>E. Ulrychová<br>E230<br>09:30&ndash;10:15" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 09:30&ndash;10:15 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 09:30&ndash;10:15">09:30&ndash;10:15</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_Ma_1" aria-label="Kód předmětu: B_Ma_1/pxAEKFPH">B_Ma_1/pxAEKFPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Matematika 1">Matematika 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=721" aria-label="Místnost: E230">E230</a></span>
+</TD>	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_PrP/pAPH<br><strong>Principy počítačů</strong><br>O. Čepek<br>E228<br>10:30&ndash;11:14" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 10:30&ndash;11:14 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 10:30&ndash;11:14">10:30&ndash;11:14</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_PrP" aria-label="Kód předmětu: B_PrP/pAPH">B_PrP/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Principy počítačů">Principy počítačů</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/6003">O. Čepek</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_PrP/pAPH<br><strong>Principy počítačů</strong><br>O. Čepek<br>E228<br>11:15&ndash;12:00" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 11:15&ndash;12:00 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 11:15&ndash;12:00">11:15&ndash;12:00</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_PrP" aria-label="Kód předmětu: B_PrP/pAPH">B_PrP/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Principy počítačů">Principy počítačů</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/6003">O. Čepek</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</TD>	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="oddelovac zacina_presne poznamka seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 14:00–14:44 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:00&ndash;14:44 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:00&ndash;14:44">14:00&ndash;14:44</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 14:00–14:44 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</TD>	<TD class="oddelovac konci_presne poznamka seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 14:45–15:30 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:45&ndash;15:30 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:45&ndash;15:30">14:45&ndash;15:30</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 14:45–15:30 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</TD>	<TD class="oddelovac zacina_presne poznamka seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 15:45–16:29 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 15:45&ndash;16:29 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 15:45&ndash;16:29">15:45&ndash;16:29</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 15:45–16:29 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</TD>	<TD class="oddelovac konci_presne poznamka seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 16:30–17:15 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 16:30&ndash;17:15 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 16:30&ndash;17:15">16:30&ndash;17:15</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 16:30–17:15 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</TD>	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+</TR>
+<TR class="multirow">	<TD class="mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="zacina_presne poznamka seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_TWS/pAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé liché pondělí 14:00–14:44 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:00&ndash;14:44 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:00&ndash;14:44">14:00&ndash;14:44</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/pAPH">B_TWS/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé liché pondělí 14:00–14:44 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</TD>	<TD class="konci_presne poznamka seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_TWS/pAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé liché pondělí 14:45–15:30 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:45&ndash;15:30 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:45&ndash;15:30">14:45&ndash;15:30</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/pAPH">B_TWS/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé liché pondělí 14:45–15:30 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</TD>	<TD class="mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+</TR>
+<tr class="multirow-mobile">
+					<th>Po</th>
+				</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_Ma_1/pxAEKFPH<br><strong>Matematika 1</strong><br>E. Ulrychová<br>E230<br>08:45&ndash;09:29" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 08:45&ndash;09:29 &ndash; seminář" class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 08:45&ndash;09:29">08:45&ndash;09:29</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_Ma_1" aria-label="Kód předmětu: B_Ma_1/pxAEKFPH">B_Ma_1/pxAEKFPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Matematika 1">Matematika 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=721" aria-label="Místnost: E230">E230</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_Ma_1/pxAEKFPH<br><strong>Matematika 1</strong><br>E. Ulrychová<br>E230<br>09:30&ndash;10:15" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 09:30&ndash;10:15 &ndash; seminář" class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 09:30&ndash;10:15">09:30&ndash;10:15</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_Ma_1" aria-label="Kód předmětu: B_Ma_1/pxAEKFPH">B_Ma_1/pxAEKFPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Matematika 1">Matematika 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=721" aria-label="Místnost: E230">E230</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_PrP/pAPH<br><strong>Principy počítačů</strong><br>O. Čepek<br>E228<br>10:30&ndash;11:14" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 10:30&ndash;11:14 &ndash; seminář" class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 10:30&ndash;11:14">10:30&ndash;11:14</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_PrP" aria-label="Kód předmětu: B_PrP/pAPH">B_PrP/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Principy počítačů">Principy počítačů</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/6003">O. Čepek</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_PrP/pAPH<br><strong>Principy počítačů</strong><br>O. Čepek<br>E228<br>11:15&ndash;12:00" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 11:15&ndash;12:00 &ndash; seminář" class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 11:15&ndash;12:00">11:15&ndash;12:00</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_PrP" aria-label="Kód předmětu: B_PrP/pAPH">B_PrP/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Principy počítačů">Principy počítačů</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/6003">O. Čepek</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 14:00–14:44 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:00&ndash;14:44 &ndash; seminář" class="oddelovac zacina_presne poznamka seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:00&ndash;14:44">14:00&ndash;14:44</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 14:00–14:44 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_TWS/pAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé liché pondělí 14:00–14:44 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:00&ndash;14:44 &ndash; seminář" class="zacina_presne poznamka seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:00&ndash;14:44">14:00&ndash;14:44</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/pAPH">B_TWS/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé liché pondělí 14:00–14:44 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 14:45–15:30 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:45&ndash;15:30 &ndash; seminář" class="oddelovac konci_presne poznamka seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:45&ndash;15:30">14:45&ndash;15:30</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 14:45–15:30 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_TWS/pAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé liché pondělí 14:45–15:30 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 14:45&ndash;15:30 &ndash; seminář" class="konci_presne poznamka seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:45&ndash;15:30">14:45&ndash;15:30</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/pAPH">B_TWS/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé liché pondělí 14:45–15:30 (26. 9., 10. 10., 24. 10., 7. 11., 21. 11. a 5. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 15:45–16:29 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 15:45&ndash;16:29 &ndash; seminář" class="oddelovac zacina_presne poznamka seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 15:45&ndash;16:29">15:45&ndash;16:29</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 15:45–16:29 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</td>
+						</tr>
+<tr class="multirow-mobile">
+							<td colspan="130" title="B_TWS/cAPH<br><strong>Tvorba webových stránek</strong><br>M. Pergel<br>E303PC<br><span class=poznamka_vysvetleni>každé sudé pondělí 16:30–17:15 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)</span>" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Po 16:30&ndash;17:15 &ndash; seminář" class="oddelovac konci_presne poznamka seminar toolkit-tooltip-init fix-tooltip">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 16:30&ndash;17:15">16:30&ndash;17:15</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_TWS" aria-label="Kód předmětu: B_TWS/cAPH">B_TWS/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Tvorba webových stránek">Tvorba webových stránek</span><span class="nepravidelnost_poznamka" role="text" aria-label="Nepravidelnost ve výuce: každé sudé pondělí 16:30–17:15 (3. 10., 17. 10., 31. 10., 14. 11., 28. 11. a 12. 12.)">*</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/7843">M. Pergel</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=602" aria-label="Místnost: E303PC">E303PC</a></span>
+</td>
+						</tr>
+<TR class="den-horni-radek">	<TH ROWSPAN="1">Út</TH>
+	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_Ma_1/cAPH<br><strong>Matematika 1</strong><br>E. Ulrychová<br>E227<br>08:45&ndash;09:29" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 08:45&ndash;09:29 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 08:45&ndash;09:29">08:45&ndash;09:29</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_Ma_1" aria-label="Kód předmětu: B_Ma_1/cAPH">B_Ma_1/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Matematika 1">Matematika 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=611" aria-label="Místnost: E227">E227</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_Ma_1/cAPH<br><strong>Matematika 1</strong><br>E. Ulrychová<br>E227<br>09:30&ndash;10:15" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 09:30&ndash;10:15 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 09:30&ndash;10:15">09:30&ndash;10:15</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_Ma_1" aria-label="Kód předmětu: B_Ma_1/cAPH">B_Ma_1/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Matematika 1">Matematika 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=611" aria-label="Místnost: E227">E227</a></span>
+</TD>	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_AJ_1/1APH<br><strong>Anglický jazyk 1</strong><br>I. Kuželíková<br>E305<br>10:30&ndash;11:14" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 10:30&ndash;11:14 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 10:30&ndash;11:14">10:30&ndash;11:14</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_AJ_1" aria-label="Kód předmětu: B_AJ_1/1APH">B_AJ_1/1APH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Anglický jazyk 1">Anglický jazyk 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/9896">I. Kuželíková</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=604" aria-label="Místnost: E305">E305</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_AJ_1/1APH<br><strong>Anglický jazyk 1</strong><br>I. Kuželíková<br>E305<br>11:15&ndash;12:00" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 11:15&ndash;12:00 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 11:15&ndash;12:00">11:15&ndash;12:00</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_AJ_1" aria-label="Kód předmětu: B_AJ_1/1APH">B_AJ_1/1APH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Anglický jazyk 1">Anglický jazyk 1</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/9896">I. Kuželíková</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=604" aria-label="Místnost: E305">E305</a></span>
+</TD>	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_DMa/pAPH<br><strong>Diskrétní matematika</strong><br>E. Ulrychová<br>E228<br>12:15&ndash;12:59" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 12:15&ndash;12:59 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 12:15&ndash;12:59">12:15&ndash;12:59</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_DMa" aria-label="Kód předmětu: B_DMa/pAPH">B_DMa/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Diskrétní matematika">Diskrétní matematika</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_DMa/pAPH<br><strong>Diskrétní matematika</strong><br>E. Ulrychová<br>E228<br>13:00&ndash;13:45" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 13:00&ndash;13:45 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 13:00&ndash;13:45">13:00&ndash;13:45</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_DMa" aria-label="Kód předmětu: B_DMa/pAPH">B_DMa/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Diskrétní matematika">Diskrétní matematika</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</TD>	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_DMa/cAPH<br><strong>Diskrétní matematika</strong><br>E. Ulrychová<br>E228<br>14:00&ndash;14:44" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 14:00&ndash;14:44 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:00&ndash;14:44">14:00&ndash;14:44</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_DMa" aria-label="Kód předmětu: B_DMa/cAPH">B_DMa/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Diskrétní matematika">Diskrétní matematika</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_DMa/cAPH<br><strong>Diskrétní matematika</strong><br>E. Ulrychová<br>E228<br>14:45&ndash;15:30" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="Út 14:45&ndash;15:30 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 14:45&ndash;15:30">14:45&ndash;15:30</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_DMa" aria-label="Kód předmětu: B_DMa/cAPH">B_DMa/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Diskrétní matematika">Diskrétní matematika</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/23563">E. Ulrychová</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=823" aria-label="Místnost: E228">E228</a></span>
+</TD>	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+</TR>
+<TR class="den-horni-radek">	<TH ROWSPAN="1" class="prave_probiha">St</TH>
+	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="oddelovac mezera" COLSPAN="21" WIDTH="16%" aria-label="volno">&nbsp;</TD>
+	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_UPg/pAPH<br><strong>Úvod do programování</strong><br>J. Lánský<br>E224<br>15:45&ndash;16:29" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="St 15:45&ndash;16:29 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 15:45&ndash;16:29">15:45&ndash;16:29</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_UPg" aria-label="Kód předmětu: B_UPg/pAPH">B_UPg/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Úvod do programování">Úvod do programování</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/14327">J. Lánský</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=610" aria-label="Místnost: E224">E224</a></span>
+</TD>	<TD class="oddelovac konci_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_UPg/pAPH<br><strong>Úvod do programování</strong><br>J. Lánský<br>E224<br>16:30&ndash;17:15" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="St 16:30&ndash;17:15 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 16:30&ndash;17:15">16:30&ndash;17:15</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_UPg" aria-label="Kód předmětu: B_UPg/pAPH">B_UPg/pAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Úvod do programování">Úvod do programování</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/14327">J. Lánský</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=610" aria-label="Místnost: E224">E224</a></span>
+</TD>	<TD class="oddelovac zacina_presne seminar toolkit-tooltip-init fix-tooltip" COLSPAN="9" WIDTH="6%" title="B_UPg/cAPH<br><strong>Úvod do programování</strong><br>J. Lánský<br>E224<br>17:30&ndash;18:14" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="St 17:30&ndash;18:14 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 17:30&ndash;18:14">17:30&ndash;18:14</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_UPg" aria-label="Kód předmětu: B_UPg/cAPH">B_UPg/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Úvod do programování">Úvod do programování</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/14327">J. Lánský</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=610" aria-label="Místnost: E224">E224</a></span>
+</TD>	<TD class="oddelovac seminar toolkit-tooltip-init fix-tooltip" COLSPAN="12" WIDTH="9%" title="B_UPg/cAPH<br><strong>Úvod do programování</strong><br>J. Lánský<br>E224<br>18:15&ndash;19:00" data-allow-html="true" data-template-classes="rozvrh-tooltip" tabindex="0" data-click-open="true" aria-label="St 18:15&ndash;19:00 &ndash; seminář">
+								<span class="cas_od_do hide-for-large" aria-label="Trvání od–do: 18:15&ndash;19:00">18:15&ndash;19:00</span>
+								<span class="predmet_kod"><a href="/auth/predmet/vsfs/zima2022/B_UPg" aria-label="Kód předmětu: B_UPg/cAPH">B_UPg/cAPH</a></span>
+								<span class="predmet_nazev" aria-label="Název předmětu: Úvod do programování">Úvod do programování</span>
+<span class="ucitele" aria-label="Vyučující"><a href="/auth/osoba/14327">J. Lánský</a></span>
+<span class="mistnost_oznaceni"><a href="/auth/kontakty/mistnost?fakulta=6410;obdobi=65;id=610" aria-label="Místnost: E224">E224</a></span>
+</TD></TR>
+</table>
+<div aria-hidden="true" class="legenda"><div class="prednaska">Přednáška</div><div class="seminar">Seminář</div><div class="prave_probiha">Právě probíhá</div><div class="poznamka">Nepravidelnost ve výuce</div></div>
+<div id="prvek_9541312" class="reveal rozvrh_doplnujici_moznosti" data-reveal>
+		<div class="row"><div class="column">
+		<h2><i class="isi-seznam"></i>Možnosti zobrazení rozvrhu</h2>
+		<form data-abide novalidate method="GET" enctype="application/x-www-form-urlencoded" action="/auth/rozvrh/zobraz/muj"><INPUT TYPE=hidden NAME="mz" VALUE="1"><INPUT TYPE=hidden NAME="fakulta" VALUE="6410"><INPUT TYPE=hidden NAME="obdobi" VALUE="65">
+		<div style="margin-top: 1.5rem;"><fieldset class="validator-group-content inputs-cover" data-for="prvek_1332689"><legend>Formát zobrazení:<abbr class="povinne" aria-label="Povinná položka" title="Povinná položka">*</abbr><span class="input-navodek navodek"><span class="navodek-nadpis"><button class="clear" type="button" title="Návod"  aria-label="Návod"><i class="isi-otaznik" aria-hidden="true"></i></button></span><div class="navodek-obsah hide"><dl><dt>Zobrazení v IS</dt><dd>Volba slouží pro výpis rozvrhu přímo ve stránce prohlížeče.</dd>
+<dt>Kalendář</dt><dd>Volbou získáte soubor formátu iCalendar (*.ics), který lze naimportovat např. do kalendářových aplikací v mobilních zařízeních nebo do Kalendáře Google.</dd>
+<dt>Text</dt><dd>Slouží k výpisu rozvrhu v textové podobě bez tabulky.</dd>
+<dt>Programátor</dt><dd>Tato volba je určena pouze programátorům k dalšímu zpracování. Výstup je ve formátu XML. Nemůžete očekávat, že po této volbě obdržíte něco smysluplného.</dd></dl></div></span></legend><div class="row align-middle radio-group"><div class="column shrink"><label for="prvek_1332689"><input checked class="required_group" data-required_group_names="format" data-validator="required" id="prvek_1332689" name="format" type="radio" value="html">Zobrazení v IS</label></div><div class="column shrink"><label for="prvek_4753591"><input class="required_group" data-required_group_names="format" data-validator="required" id="prvek_4753591" name="format" type="radio" value="ical">Kalendář</label></div><div class="column shrink"><label for="prvek_9025645"><input class="required_group" data-required_group_names="format" data-validator="required" id="prvek_9025645" name="format" type="radio" value="text">Text</label></div><div class="column shrink"><label for="prvek_9252609"><input class="required_group" data-required_group_names="format" data-validator="required" id="prvek_9252609" name="format" type="radio" value="xml">Programátor</label></div></div></fieldset><span class="form-error" data-form-error-for="prvek_1332689"><span class="form-error-text"></span></span></div>
+		<div><a href="#" id="prvek_3705248" class="  rozklikavatko-nadpis" data-content-id="prvek_2845892" aria-expanded="false"><span class="rozklikavatko-nadpis-neaktivni" title="Více"><i class="isi-inline-right isi-plus" aria-hidden="true"></i>Bloková výuka</span><span class="rozklikavatko-nadpis-aktivni print-hide" title="Méně"><i class="isi-inline-right isi-minus" aria-hidden="true"></i>Bloková výuka</span></a><div id="prvek_2845892" class=" hide print-hide rozklikavatko-obsah"><div class="bgbarva-seda3 p-1 pl-2 mt-05"><fieldset class="validator-group-content inputs-cover" data-for="prvek_9699590"><legend>Zobrazení blokové výuky formou kalendáře:</legend><div class="row align-middle radio-group"><div class="column small-12"><label for="prvek_9699590"><input checked data-waschecked="true" id="prvek_9699590" name="bv" type="radio" value="">běžné zobrazení</label></div><div class="column small-12"><label for="prvek_2111175"><input data-waschecked="false" id="prvek_2111175" name="bv" type="radio" value="t">aktuální týden</label></div><div class="column small-12"><label for="prvek_7821786"><input data-waschecked="false" id="prvek_7821786" name="bv" type="radio" value="s">celý semestr</label></div><div class="column small-12"><label for="prvek_667702"><input data-waschecked="false" id="prvek_667702" name="bv" type="radio" value="v">vybraný týden&emsp;<select id="prvek_5799996" name="tyden"><option value="0">(1)&emsp;26. 9. 2022 &ndash; 2. 10. 2022&emsp;(lichý)</option><option value="1">(2)&emsp;3. 10. 2022 &ndash; 9. 10. 2022&emsp;(sudý)</option><option value="2">(3)&emsp;10. 10. 2022 &ndash; 16. 10. 2022&emsp;(lichý)</option><option value="3">(4)&emsp;17. 10. 2022 &ndash; 23. 10. 2022&emsp;(sudý)</option><option value="4">(5)&emsp;24. 10. 2022 &ndash; 30. 10. 2022&emsp;(lichý)</option><option value="5">(6)&emsp;31. 10. 2022 &ndash; 6. 11. 2022&emsp;(sudý)</option><option value="6">(7)&emsp;7. 11. 2022 &ndash; 13. 11. 2022&emsp;(lichý)</option><option value="7">(8)&emsp;14. 11. 2022 &ndash; 20. 11. 2022&emsp;(sudý)</option><option value="8">(9)&emsp;21. 11. 2022 &ndash; 27. 11. 2022&emsp;(lichý)</option><option value="9">(10)&emsp;28. 11. 2022 &ndash; 4. 12. 2022&emsp;(sudý)</option><option value="10">(11)&emsp;5. 12. 2022 &ndash; 11. 12. 2022&emsp;(lichý)</option><option value="11">(12)&emsp;12. 12. 2022 &ndash; 18. 12. 2022&emsp;(sudý)</option><option value="12">(13)&emsp;19. 12. 2022 &ndash; 25. 12. 2022&emsp;(lichý)</option><option value="13">(14)&emsp;26. 12. 2022 &ndash; 1. 1. 2023&emsp;(sudý)</option><option value="14">(15)&emsp;2. 1. 2023 &ndash; 8. 1. 2023&emsp;(lichý)</option><option value="15">(16)&emsp;9. 1. 2023 &ndash; 15. 1. 2023&emsp;(sudý)</option><option value="16">(17)&emsp;16. 1. 2023 &ndash; 22. 1. 2023&emsp;(lichý)</option><option value="17">(18)&emsp;23. 1. 2023 &ndash; 29. 1. 2023&emsp;(sudý)</option><option value="18">(19)&emsp;30. 1. 2023 &ndash; 5. 2. 2023&emsp;(lichý)</option></select><span class="form-error" data-form-error-for="prvek_5799996"><span class="form-error-text"></span></span></label></div><div class="column small-12"><label for="prvek_545309"><input data-waschecked="false" id="prvek_545309" name="bv" type="radio" value="r">období od <input autocomplete="off" class="datum_uzky" data-date-format="dd. mm. yyyy" data-datepicker data-validator="fdatepicker" id="prvek_46956" name="od" type="text"><span class="form-error" data-form-error-for="prvek_46956"><span class="form-error-text"></span></span> do <input autocomplete="off" class="datum_uzky" data-date-format="dd. mm. yyyy" data-datepicker data-validator="fdatepicker" id="prvek_1565593" name="do" type="text"><span class="form-error" data-form-error-for="prvek_1565593"><span class="form-error-text"></span></span></label></div></div></fieldset><span class="form-error" data-form-error-for="prvek_9699590"><span class="form-error-text"></span></span></div></div></div>
+		<label style="margin-top: 1.5rem;">Další možnosti:</label>
+		<div class="volby_husteji"><label class="validator-group-content" for="prvek_4852340"><input checked id="prvek_4852340" name="vcuc" type="checkbox" value="1">vypisovat i učitele</label><span class="form-error" data-form-error-for="prvek_4852340"><span class="form-error-text"></span></span><label class="validator-group-content" for="prvek_6780564"><input id="prvek_6780564" name="vc_hledani_predm" type="checkbox" value="1">včetně možnosti vyhledávání vhodných předmětů</label><span class="form-error" data-form-error-for="prvek_6780564"><span class="form-error-text"></span></span><label class="validator-group-content" for="prvek_4765095"><input id="prvek_4765095" name="jen_budouci" type="checkbox" value="1">zobrazovat jen akce konané v&nbsp;budoucnosti</label><span class="form-error" data-form-error-for="prvek_4765095"><span class="form-error-text"></span></span><label class="validator-group-content" for="prvek_5954419"><input id="prvek_5954419" name="seminare_vsechny" type="checkbox" value="1">včetně všech seminářů zobrazovaných předmětů</label><span class="form-error" data-form-error-for="prvek_5954419"><span class="form-error-text"></span></span>
+<div class="margin-left-1em"><label class="validator-group-content" for="prvek_9351229"><input id="prvek_9351229" name="seminare_volne" type="checkbox" value="1">omezit na předměty, u nichž nejsem přihlášen k&nbsp;žádné seminární skupině</label><span class="form-error" data-form-error-for="prvek_9351229"><span class="form-error-text"></span></span></div></div>
+		<div class="margin-top-2em text-right"><button id="prvek_5417962" class="use-loader moznosti-zobrazeni-btn button" type="submit" name="vybrat" value="1" data-submit>Zobrazit</button></div><a href="#" id="prvek_2870668" class="  rozklikavatko-nadpis" data-content-id="prvek_9909141" aria-expanded="false"><span class="rozklikavatko-nadpis-neaktivni" title="Více"><i class="isi-inline-right isi-plus" aria-hidden="true"></i>Tiskový výstup</span><span class="rozklikavatko-nadpis-aktivni print-hide" title="Méně"><i class="isi-inline-right isi-minus" aria-hidden="true"></i>Tiskový výstup</span></a><div id="prvek_9909141" class=" hide print-hide rozklikavatko-obsah"><div class="tisk_fs"><div class="row vyber_tiskarny_row medium-unstack">
+	<div class="small-12 medium-unstack column"><label for="prvek_3552542">Formát souboru pro stažení</label><span class="input-group"><select class="input-group-field" id="prvek_3552542" name="tisk_soubor"><option value="pdf" selected>PDF soubor</option><option value="ps">PostScriptový soubor</option><option value="tex">Zdrojový soubor pro TeX</option></select><div class="input-group-button"><button id="prvek_4239885" class="button" type="submit" name="tisk_download" value="1">Stáhnout</button></div></span><span class="form-error" data-form-error-for="prvek_3552542"><span class="form-error-text"></span></span></div>
+	<div class="small-12 medium-unstack column"><label for="prvek_5092305">Tisk z IS na tiskárnu<span class="input-navodek navodek"><span class="navodek-nadpis"><button class="clear" type="button" title="Návod"  aria-label="Návod"><i class="isi-otaznik" aria-hidden="true"></i></button></span><div class="navodek-obsah hide">Tisk na tiskárně z IS vám může zprovoznit vaše technická podpora. Viz též <a href="/auth/tiskarny/?fakulta=6410;obdobi=65" class="okno" target="_blank">více o tisku z&nbsp;IS</a>.</div></span></label><span class="input-group"><select class="input-group-field" disabled id="prvek_5092305" name="tiskarna"><option value="-1">Žádná tiskárna není k dispozici</option></select><div class="input-group-button"><button id="prvek_3523155" class="button" type="submit" name="tisk_print" value="1" disabled>Vytisknout</button></div></span><span class="form-error" data-form-error-for="prvek_5092305"><span class="form-error-text"></span></span></div>
+</div>
+<div class="row nastaveni_tisku_row">
+	<div class="shrink column"><h4>Nastavení tisku</h4><div class="checkbox-group"><label class="validator-group-content" for="prvek_6725930"><input id="prvek_6725930" name="rozvrh_roztahnout" type="checkbox" value="1">Roztáhnout rozvrh na výšku jedné strany</label><span class="form-error" data-form-error-for="prvek_6725930"><span class="form-error-text"></span></span><label class="validator-group-content" for="prvek_1718522"><input id="prvek_1718522" name="vc_dnu_bez_vyuky" type="checkbox" value="1">Vytisknout i dny bez výuky</label><span class="form-error" data-form-error-for="prvek_1718522"><span class="form-error-text"></span></span><label class="validator-group-content" for="prvek_2294962"><input id="prvek_2294962" name="format_a3" type="checkbox" value="1">Vytisknout na A3 na výšku (bez poznámek pod čarou, bez jmen učitelů, menší okénka) – experimentální</label><span class="form-error" data-form-error-for="prvek_2294962"><span class="form-error-text"></span></span></div></div>
+</div>
+<div class="row dalsi_volby_row">
+	<div class="small-12 column"><a href="#" id="prvek_7910375" class="  rozklikavatko-nadpis" data-content-id="prvek_3398474" aria-expanded="false"><span class="rozklikavatko-nadpis-neaktivni" title="Více">Další volby tisku<i class="isi-inline-left isi-rozbalit" aria-hidden="true"></i></span><span class="rozklikavatko-nadpis-aktivni print-hide" title="Méně">Další volby tisku<i class="isi-inline-left isi-sbalit" aria-hidden="true"></i></span></a><div id="prvek_3398474" class=" hide print-hide rozklikavatko-obsah"><h5>Více stran na jednu</h5><fieldset class="validator-group-content inputs-cover" data-for="prvek_4415530"><div class="row align-middle radio-group"><div class="column small-12"><label for="prvek_4415530"><input checked id="prvek_4415530" name="nup" type="radio" value="">Ponechat beze změn (jedna strana A4 na jednu).</label></div><div class="column small-12"><label for="prvek_2609430"><input id="prvek_2609430" name="nup" type="radio" value="2a4">Dvě strany A4 zmenšit na jednu A4.</label></div><div class="column small-12"><label for="prvek_6003772"><input id="prvek_6003772" name="nup" type="radio" value="a3">Dvě strany A4 spojit na jednu A3.</label></div></div></fieldset><span class="form-error" data-form-error-for="prvek_4415530"><span class="form-error-text"></span></span><h5>Pořadí a výběr stran</h5><fieldset class="validator-group-content inputs-cover" data-for="prvek_3892877"><div class="row radio-group"><div class="column"><div class="row">
+	<div class="small-12 medium-6 column"><div class="row align-middle"><div class="column small-12"><label for="prvek_3892877"><input checked id="prvek_3892877" name="pages" type="radio" value="">Všechny strany v&nbsp;původním pořadí (1, 2, 3, 4, &hellip;).</label></div><div class="column small-12"><label for="prvek_2068097"><input id="prvek_2068097" name="pages" type="radio" value="4123">Oboustranný tisk brožury (strany 4, 1, 2, 3).</label></div><div class="column small-12"><label for="prvek_798700"><input id="prvek_798700" name="pages" type="radio" value="41">Vnější strana brožury (strany 4, 1).</label></div><div class="column small-12"><label for="prvek_7003260"><input id="prvek_7003260" name="pages" type="radio" value="23">Vnitřní strana brožury (strany 2, 3).</label></div></div></div>
+	<div class="small-12 medium-6 column"><div class="row align-middle"><div class="column small-12"><label for="prvek_1151413"><input id="prvek_1151413" name="pages" type="radio" value="1">Strana 1 &ndash; dvojstrana s&nbsp;jen jednou potištěnou stranou.</label></div><div class="column small-12"><label for="prvek_7276360"><input id="prvek_7276360" name="pages" type="radio" value="2">Strana 2 &ndash; dvojstrana s&nbsp;jen jednou potištěnou stranou.</label></div><div class="column small-12"><label for="prvek_8845959"><input id="prvek_8845959" name="pages" type="radio" value="3">Strana 3 &ndash; dvojstrana s&nbsp;jen jednou potištěnou stranou.</label></div><div class="column small-12"><label for="prvek_483059"><input id="prvek_483059" name="pages" type="radio" value="4">Strana 4 &ndash; dvojstrana s&nbsp;jen jednou potištěnou stranou.</label></div></div></div>
+</div>
+</div></div></fieldset><span class="form-error" data-form-error-for="prvek_3892877"><span class="form-error-text"></span></span></div></div>
+</div>
+</div>
+</div></form>
+		<button class="close-button" data-close type="button" aria-label="Zavřít">
+    			<span aria-hidden="true">&times;</span>
+  		</button>
+		</div></div>
+	</div>
+</main></div>
+		
+		<div class="foundation-design-z foot_clear">
+			
+	<div class="row">
+		
+	</div>
+	<footer id="paticka" class="">
+		<div class="row">
+			<div class="columns small-12 medium-6 paticka_logo">
+	<a href="/auth/"><img src="https://is.vsfs.cz/pics/design/r6/loga/logo-is.svg" alt="IS VŠFS"></a>
+	<div>
+		Informační systém VŠFS
+		<div class="footer_about">
+			Provozuje <a href="https://www.fi.muni.cz/">Fakulta informatiky MU</a>
+		</div>
+		
+	</div>
+</div>
+<div class="columns small-6 medium-3">
+	<div class="footer_podpora">
+	Potřebujete poradit?
+	<span class="kont_email"><a href="/auth/mail/mail_posli?to=vsfsis%40fi.muni.cz">vsfsis@fi.muni.cz</a></span>
+</div>
+	<div class="footer_napoveda">
+		<a href="/auth/napoveda/komunikace/kalendar">Nápověda</a>
+	</div>
+	<div class="row">
+		<div class="columns small-12  show-for-small-only">
+			<div class="footer_zoomy">
+				<a href="?fakulta=6410;obdobi=65;zoomy_is=1">Klasický IS</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="columns small-6 medium-3 nastaveni_col">
+	<div class="footer_datum">
+		<span title="Dnes je 39. (lichý) týden.">28. 9. 2022 <span style='padding: 0 0.6em'>|</span> 14:53</span>
+		<a href="/system/cas" title="Dnes je 39. (lichý) týden." class="footer_cas">Aktuální datum a&nbsp;čas</a>
+	</div>
+	<div>
+	<div class="row collapse">
+	<div class="column small-12 medium-6 footer_nastaveni"><a href="/auth/system/nastaveni">Nastavení</a></div>
+	<div class="column small-12 medium-6 footer_privacy"><a href="/auth/privacy/">Soukromí</a></div>
+</div>
+
+	
+</div>
+</div>
+			<div class="right-border"></div>
+			<div class="left-border"></div>
+		</div>
+		<a href="#hlavicka" class="skip_up" title="Skočit na začátek stránky">
+			Nahoru
+		</a>
+	</footer>
+
+		</div>
+	</div>
+</div>
+
+
+<script src="/js/is.js?_v=45d169d"></script>
+<script src="/js/jquery-ui-1.12.1-sortable-r6.min.js?_v=611662c"></script>
+<script src="/js/log-kliknuto.js?_v=c8b2f5b"></script>
+<script>is.Define.module('Rozvrh', function(ns, $) {
+	var seminare_vsechny_obnov_zakliknuti = false;
+
+	return {
+		init: function() {
+
+			var loader = new is.Loader('#app_content', '#app_menu a, .use-loader', {
+				cache: 'all',
+			});
+
+			loader.before(function() {
+				// vypnuti loaderu pro zobrazeni rozvrhu v XML a podobne formaty
+				var e = arguments[1];
+				if (!$(e.target).hasClass('moznosti-zobrazeni-btn')) {
+					// nezajima me, neklikam na zmenu zobrazeni
+					return true;
+				}
+
+				var $format = $('input[type="radio"][name="format"]:visible');
+
+				if ($format.length && /^(ical|xml)$/.test($format.filter(':checked').val())) {
+					return false;
+				}
+			});
+			loader.before(is.RozvrhKalendar.destroy);
+			loader.before(function() {
+				if ($('.rozvrh_doplnujici_moznosti').length) {
+					try {
+						$('.rozvrh_doplnujici_moznosti').foundation('close');
+					} catch (e) {
+						is.Rozvrh.rethrow_exception(e, 'foundation(close) na doplnujicich moznostech rozvrhu');
+					}
+				}
+			});
+			loader.before(function() {
+				// zlikviduju vsechny otevrene tooltipy
+				$('div.tooltip[role="tooltip"]').remove();
+
+				try {
+					$('.fix-tooltip').each(function() {
+						var pl = is.Foundation.get_plugin($(this));
+						if (pl) {
+							var title = pl.options.tipText;
+							$(this)
+								.foundation('destroy')
+								.attr({
+									'data-allow-html': 'true',
+									'data-template-classes': 'rozvrh-tooltip',
+									'title': title
+								})
+								.addClass('toolkit-tooltip-init');
+						}
+					});
+				} catch (e) {
+					is.Rozvrh.rethrow_exception(e, 'obnoveni atributu pro toolkit-tooltip-init');
+				}
+			});
+
+			// hack: Katalog pouziva foundationi Sticky
+			// pokud otevru vyhledavani predmetu a pak se Loaderem preklikam jinam,
+			// zacne pri zmene velikosti okna padat nejaky MutationObserver, protoze
+			// sticky element katalogu jiz ve strance neexistuje
+			loader.before(function() {
+				is.Foundation.safe_destroy('body', { sticky: 1 });
+			});
+			loader.after(function() {
+				is.Foundation.safe_init('.sticky-placeholder');
+			});
+			// konec hacku pro Sticky
+
+			loader.after(function() {
+				// zlikviduju vsechny otevrene tooltipy, ktere byly otevreny
+				// po zacatku nacitani (unikly tedy likvidaci v before)
+				$('div.tooltip[role="tooltip"]').remove();
+			});
+			loader.after(function() {
+				is.RozvrhKalendar.init(); // bez argumentu, at se nedostane nic do argumentu data
+			});
+			loader.after((function f() {
+				// mam-li prave nacten kalendar, skryju prepinani fakulty a obdobi
+				$('#prepinace')[ $('#app_content #kalendar:visible').length ? 'hide' : 'show' ]();
+
+				return f;
+			})());
+
+			// vyber mistnosti zobrazuje a skryva mistnosti dle checkboxu 'vc. mnou rezervovatelnych mistnosti'
+			// zobrazeni/skryti udelam pri kazdem nacteni stranky i pri kliknuti na prislusny checkbox
+			function zobrazit_skryt_rezervovatelne_mistnosti() {
+				$('select[name="mistnost"]').find('.mnou_rezervovatelna_mistnost')[
+					$('#vc_mnou_rezervovatelnych_mistnosti').is(':checked') ? 'show' : 'hide'
+				]();
+			}
+
+			zobrazit_skryt_rezervovatelne_mistnosti();
+			loader.after(zobrazit_skryt_rezervovatelne_mistnosti);
+			$(document.body).on('click', '#vc_mnou_rezervovatelnych_mistnosti', zobrazit_skryt_rezervovatelne_mistnosti);
+
+			// zakliknuti 'omezit na predmety, u nichz nejsem prihlasen k zadne seminarni skupine'
+			// zpusobi zakliknuti a zablokovani nadrazeneho checkboxu 'vcetne vsech seminaru'
+			$(document.body).on('click', 'input[name="seminare_volne"]', function () {
+				var $sv = $('input[name="seminare_vsechny"]');
+
+				if ($(this).prop('checked')) {
+					seminare_vsechny_obnov_zakliknuti = $sv.prop('checked');
+					$sv.prop({
+						checked: true,
+						disabled: true
+					});
+				} else {
+					$sv.prop({
+						checked: seminare_vsechny_obnov_zakliknuti,
+						disabled: false
+					});
+				}
+			});
+
+			$(document.body).on('click', 'button[name^="tisk_"]', function() {
+				$(this).closest('form').attr('method', 'POST');
+			});
+
+			$(document.body).on('click', 'a[data-checkbox-name]', function() {
+				var name = $(this).data('checkbox-name'),
+					action = parseInt($(this).data('checkbox-action'), 10); // vsechny | neoznacene | zadne = 1 | -1 | 0
+
+				$('input[type="checkbox"][name="' + name + '"]').each(function() {
+					$(this).prop('checked', action === 1 || action !== 0 && !$(this).prop('checked'));
+				});
+			});
+		},
+
+		rethrow_exception: function(e, ident) {
+			var members = ['message', 'name', 'fileName', 'lineNumber', 'columnNumber'];
+			var t = [];
+
+			for (var i = 0, m; m = members[i]; ++i) {
+				t.push('e.' + m + ' = ' + e[m]);
+			}
+
+			console.error('Zachycena vyjimka v rozvrhu. Identifikator mista: ' + ident, t);
+		}
+	};
+});
+
+is.Define.module('RozvrhKalendar', function(ns, $) {
+	var _data = undefined; // data ziskana z prvniho volani init() ulozime sem a pouzijeme je pri vyvolani initu loaderem
+	var handlery_navazane = false;
+	var skryte_typy_udalosti = [];
+	var posledni_typ_zobrazeni;
+	var pocet_requestu_zakazujicich_typy = 0;
+
+	function otevri_sync_token_modal() {
+		try {
+			$('#sync_token_modal').foundation('open');
+		} catch (e) {
+			is.Rozvrh.rethrow_exception(e, 'foundation(open) na modalnim okne se sync tokenem');
+		}
+
+		$('#sync_token_modal').find('input')[0].select();
+	}
+
+	function skryj_udalosti(typy) {
+		if (typy) {
+			skryte_typy_udalosti = skryte_typy_udalosti.concat(typy.filter(function(t) {
+				return skryte_typy_udalosti.indexOf(t) === -1;
+			}));
+			skryte_typy_udalosti.sort();
+		}
+
+		$('#kalendar').fullCalendar('removeEvents', function(o) {
+			return (typy || skryte_typy_udalosti).some(function(t) {
+				return o.className.indexOf('ev_' + t) > -1;
+			});
+		});
+	}
+
+	function zobraz_udalosti(typy) {
+		if (typy) {
+			typy.forEach(function(t) {
+				var ix = skryte_typy_udalosti.indexOf(t);
+
+				if (ix > -1 && $('.legenda div.toggle-switch.sw_' + t).length > 0) {
+					skryte_typy_udalosti.splice(ix, 1);
+				}
+			});
+		}
+
+		try {
+			$('#kalendar').fullCalendar('removeEvents'); // pred renderovanim nutno vsechno skryt
+		} catch (e) {
+			is.Rozvrh.rethrow_exception(e, 'fullCalendar(removeEvents)');
+		}
+		try {
+			$('#kalendar').fullCalendar('renderEvents', _data);
+		} catch (e) {
+			is.Rozvrh.rethrow_exception(e, 'fullCalendar(renderEvents)');
+		}
+
+		if (skryte_typy_udalosti.length > 0) {
+			skryj_udalosti();
+		}
+	}
+
+	return {
+		init: function(data, skryte_typy_pref, typ_zobrazeni_pref) {
+			_data = data || _data;
+
+			if (typeof _data === 'undefined') {
+				return;
+			}
+
+			if (typeof skryte_typy_pref !== 'undefined') {
+				skryte_typy_udalosti = skryte_typy_pref;
+			}
+			var naplanovano_skryti_udalosti = skryte_typy_udalosti.length > 0;
+
+			if (typeof typ_zobrazeni_pref !== 'undefined') {
+				posledni_typ_zobrazeni = typ_zobrazeni_pref;
+			}
+
+			// spocteme min. a max. datum v _data, neumoznime se dostat nikam jinam
+			// pro zobrazeni Den omezime radky brzo rano a pozde vecer
+			// defaultni hodnoty nastavuji na 9 a 19, ale za cyklem (ktery tyto hodnoty)
+			// pripadne zmeni, se interval jeste posouva o hodinu na obe strany
+			// tj. je-li kalendar prazdny, zobrazuje se 8:00 - 20:00
+			var validRange = {},
+				minTime = 9,
+				maxTime = 19;
+
+			// pouze slovni oznaceni pro indexy v datum.split(...), at je kod citelnejsi
+			var d = {
+				Rok: 0,
+				Mes: 1,
+				Den: 2,
+				Hod: 3,
+				Min: 4,
+				Sek: 5
+			};
+
+			for (var i = 0, o; o = _data[i]; ++i) {
+				var zac = o.start.split(/\D/),
+					kon = (o.end || o.start).split(/\D/);
+
+				// dny pro validRange
+				var den_zac = [
+					zac[d.Rok],
+					('0' + zac[d.Mes]).slice(-2), // mesic pro jistotu doplnim na delku min. 2
+					'01' // den je vzdy 01 - povoluji zobrazit cele mesice
+				].join('-');
+				// cas 'do' je nevcetne, musim proto vypocitat prvni den nasledujiciho mesice
+				// toto neni uplne dobre, pokud posledni udalost konci 31. 7. 23:59:59 - pak se
+				// pro kalendar generuje datum do 1. 8. 00:00:00, jenze ja takto zbytecne prodlouzim
+				// povolene konani do 1. 9. nevcetne (tj. do 31. 8.)
+				var den_kon = [
+					parseInt(kon[d.Rok], 10) + Math.floor(kon[d.Mes] / 12), // rok, prip. +1, je-li toto prosinec
+					('0' + (1 + (kon[d.Mes] % 12))).slice(-2), // mesic zvetseny o 1
+					'01', // den je opet vzdy 01
+				].join('-');
+
+				// zacatek a konec behem dne pouze pro udalosti netrvajici cely den
+				if (!o.allDay && zac.length > 3) {
+					minTime = Math.min(minTime, zac[d.Hod]);
+
+					if (o.end) {
+						// zname konec trvani udalosti
+						// pokud udalost nekonci 13:00:00 (tj. ve skutecnosti 12:59:59), ale 13:37:42,
+						// tak povolim konani az do 14:00 (to je to pripocteni 1)
+						maxTime = Math.max(maxTime, (kon[d.Min] || kon[d.Sek] ? 1 : 0) + parseInt(kon[d.Hod], 10));
+					} else {
+						// konec je neznamy - kalendar zobrazi udalost na 2 hodiny
+						maxTime = Math.max(maxTime, parseInt(zac[d.Hod], 10) + 2);
+					}
+				}
+
+				if (!validRange.start || validRange.start > den_zac) {
+					validRange.start = den_zac;
+				}
+
+				if (!validRange.end || validRange.end < den_kon) {
+					validRange.end = den_kon;
+				}
+			}
+
+			minTime = Math.max(0, minTime - 1) + ':00:00';
+			maxTime = Math.min(24, maxTime + 1) + ':00:00';
+
+			try {
+				$('#kalendar').fullCalendar({
+					locale: is.session.get('lang'),
+					header: {
+						left: 'title prev next today',
+						right: 'month agendaWeek agendaDay listWeek'
+					},
+					eventTimeFormat: 'H:mm',
+					eventLimit: true,
+					events: _data,
+					validRange: validRange,
+					minTime: minTime,
+					maxTime: maxTime,
+					defaultView: posledni_typ_zobrazeni, // toto urcite existuje, server nikdy neposila nedefinovanou hodnotu
+					eventRender: function(ev, el) {
+						var $t = $(el).find('.fc-title');
+						$t.html($t.text()); // titulek muze obsahovat HTML, napr. entitu &nbsp;, tu chci interpretovat
+					},
+					eventAfterAllRender: function(view) {
+						// poznacim novy typ zobrazeni; i do preferenci
+						is.Ajax.request('/auth/calendar/typ_zobrazeni', { t: view.type }).done(function() {
+							posledni_typ_zobrazeni = view.type;
+						});
+
+						// po vykresleni vsech udalosti pridam zeleny tooltip
+						// plati pouze pro zobrazeni mesice nebo tydne
+						if (view.type === 'month' || view.type === 'agendaWeek') {
+							$('.fc-event').addClass('toolkit-tooltip-init').each(function() {
+								var cas = $(this).find('.fc-time').text();
+									popis = $(this).find('.fc-title').text();
+
+								if (cas) {
+									popis = '<b>' + cas + '</b><br>' + popis;
+								}
+
+								$(this).attr({
+									'title': popis,
+									'data-allow-html': 'true'
+								});
+							});
+						}
+					}
+				});
+			} catch (e) {
+				is.Rozvrh.rethrow_exception(e, 'inicializace kalendare');
+			}
+
+			if (!handlery_navazane) {
+				$(document.body).on('click', '#dej_sync_token', function() {
+					// dotahnu #sync_token_modal, pokud jeste neexistuje, a otevru jej
+					if ($('#sync_token_modal').length) {
+						otevri_sync_token_modal();
+					} else {
+						is.Ajax.request('/auth/calendar/sync_token', { op: 'g' }).done(otevri_sync_token_modal);
+					}
+				});
+
+				$(document.body).on('click', '#pregeneruj_sync_token', function() {
+					is.Ajax.request('/auth/calendar/sync_token', { op: 'r' }).done(function(data) {
+						if (data.url) {
+							$('#sync_token_modal').find('input[type="text"]').val(data.url);
+						}
+					});
+				});
+
+				$(document.body).on('click', '#sync_cal_url_copy', function() {
+					$('#sync_token_modal').find('input')[0].select();
+					document.execCommand('copy');
+				});
+
+				$(document.body).on('click', '.legenda div.toggle-switch', function() {
+					var t = [].slice.call(this.classList, 0).filter(function(c) {
+						return /^sw_/.test(c);
+					}).map(function(c) {
+						return c.substr(3);
+					});
+
+					if ($(this).hasClass('zakazano')) {
+						$(this).find('i.isi-prohibited').remove();
+						zobraz_udalosti(t);
+					} else {
+						$(this).prepend('<i class="isi-prohibited"></i>');
+						skryj_udalosti(t);
+					}
+					$(this).toggleClass('ikona zakazano');
+
+					// ulozime ihned, nebezi-li jiny request zakazujici typy; v jinem pripade pockame pul sekundy
+					// neni to jinak vychytrale reseni, ale na tuto nekritickou vec staci
+					if (pocet_requestu_zakazujicich_typy) {
+						setTimeout(uloz_preference, 500);
+					} else {
+						uloz_preference();
+					}
+
+					function uloz_preference() {
+						++pocet_requestu_zakazujicich_typy;
+
+						is.Ajax.request('/auth/calendar/zakazane_typy', { t: skryte_typy_udalosti.join(',') }).done(function() {
+							--pocet_requestu_zakazujicich_typy;
+						});
+					}
+				});
+
+				handlery_navazane = true;
+			}
+
+			if (naplanovano_skryti_udalosti) {
+				skryj_udalosti();
+			}
+		},
+
+		destroy: function() {
+			$('#kalendar').fullCalendar('destroy');
+		}
+	};
+});
+</script>
+<script src="/js/is/Loader.js?_v=8c9d153"></script>
+<script src="/js/moment.min.js?_v=7e43d8c"></script>
+<script src="/js/fullcalendar/fullcalendar.js?_v=2a06bee"></script>
+<script src="/js/fullcalendar/locale/cs.js?_v=baa788e"></script>
+<script>
+(function() {
+
+"use strict";
+
+is.Design.init({
+   "session" : {
+      "session_id" : "377039900",
+      "vidim_kazdeho" : null,
+      "server_time" : "28. 9. 2022 14:53:46",
+      "skola_zkratka" : "VŠFS",
+      "pouzit_neoverene_udaje" : null,
+      "w_log_id" : "763459689",
+      "debug" : 1,
+      "remote_user" : "38643",
+      "skola_id" : "64",
+      "sn" : "/auth/rozvrh/index.pl",
+      "auth" : "/auth",
+      "is_muni_cz" : "is.vsfs.cz",
+      "lang" : "cs",
+      "login" : "38643",
+      "ekurz" : false,
+      "uco" : "38643",
+      "is_design_z" : "",
+      "cgipar" : {
+         "fakulta" : [
+            "6410"
+         ],
+         "obdobi" : [
+            "65"
+         ]
+      }
+   },
+   "svatky" : {
+      "20001230" : 1,
+      "20151231" : 1,
+      "20010706" : 1,
+      "20071224" : 1,
+      "20220928" : 1,
+      "20200705" : 1,
+      "20170706" : 1,
+      "20201229" : 1,
+      "20101229" : 1,
+      "20171225" : 1,
+      "20040102" : 1,
+      "20080508" : 1,
+      "20021226" : 1,
+      "20101230" : 1,
+      "20101231" : 1,
+      "20190501" : 1,
+      "20161229" : 1,
+      "20231228" : 1,
+      "20180330" : 1,
+      "20131028" : 1,
+      "20161227" : 1,
+      "20041230" : 1,
+      "20180928" : 1,
+      "20200413" : 1,
+      "20120706" : 1,
+      "20121226" : 1,
+      "20220501" : 1,
+      "20201224" : 1,
+      "20151226" : 1,
+      "20101117" : 1,
+      "20201225" : 1,
+      "20200101" : 1,
+      "20070101" : 1,
+      "20170705" : 1,
+      "20120508" : 1,
+      "20140501" : 1,
+      "20090705" : 1,
+      "20051219" : 1,
+      "20021228" : 1,
+      "20081226" : 1,
+      "20210928" : 1,
+      "20221227" : 1,
+      "20161225" : 1,
+      "20111225" : 1,
+      "20100501" : 1,
+      "20080101" : 1,
+      "20130101" : 1,
+      "20080705" : 1,
+      "20161222" : 1,
+      "20221225" : 1,
+      "20141028" : 1,
+      "20050705" : 1,
+      "20161117" : 1,
+      "20041226" : 1,
+      "20151223" : 1,
+      "20201028" : 1,
+      "20191117" : 1,
+      "20210101" : 1,
+      "20041229" : 1,
+      "20051225" : 1,
+      "20220415" : 1,
+      "20221224" : 1,
+      "20060928" : 1,
+      "20200928" : 1,
+      "20170101" : 1,
+      "20050928" : 1,
+      "20030421" : 1,
+      "20001228" : 1,
+      "20050501" : 1,
+      "20071117" : 1,
+      "20141224" : 1,
+      "20051220" : 1,
+      "20221230" : 1,
+      "20110101" : 1,
+      "20021223" : 1,
+      "20060508" : 1,
+      "20081117" : 1,
+      "20040928" : 1,
+      "20191228" : 1,
+      "20181229" : 1,
+      "20161231" : 1,
+      "20150706" : 1,
+      "20131224" : 1,
+      "20021224" : 1,
+      "20051226" : 1,
+      "20040705" : 1,
+      "20040508" : 1,
+      "20071230" : 1,
+      "20001226" : 1,
+      "20110705" : 1,
+      "20080706" : 1,
+      "20121225" : 1,
+      "20150928" : 1,
+      "20061223" : 1,
+      "20140928" : 1,
+      "20160501" : 1,
+      "20211224" : 1,
+      "20200508" : 1,
+      "20081224" : 1,
+      "20041223" : 1,
+      "20130401" : 1,
+      "20031227" : 1,
+      "20070508" : 1,
+      "20201230" : 1,
+      "20090706" : 1,
+      "20151229" : 1,
+      "20101226" : 1,
+      "20090413" : 1,
+      "20131117" : 1,
+      "20131230" : 1,
+      "20191227" : 1,
+      "20001224" : 1,
+      "20160101" : 1,
+      "20150508" : 1,
+      "20050101" : 1,
+      "20171223" : 1,
+      "20161028" : 1,
+      "20171221" : 1,
+      "20011117" : 1,
+      "20121223" : 1,
+      "20031228" : 1,
+      "20220705" : 1,
+      "20130705" : 1,
+      "20080324" : 1,
+      "20120705" : 1,
+      "20011230" : 1,
+      "20031230" : 1,
+      "20021229" : 1,
+      "20020101" : 1,
+      "20061226" : 1,
+      "20080501" : 1,
+      "20001231" : 1,
+      "20201226" : 1,
+      "20180705" : 1,
+      "20141117" : 1,
+      "20191028" : 1,
+      "20060101" : 1,
+      "20011229" : 1,
+      "20041225" : 1,
+      "20230508" : 1,
+      "20100705" : 1,
+      "20131231" : 1,
+      "20160706" : 1,
+      "20190705" : 1,
+      "20100405" : 1,
+      "20100508" : 1,
+      "20230705" : 1,
+      "20070706" : 1,
+      "20060417" : 1,
+      "20181226" : 1,
+      "20231230" : 1,
+      "20070705" : 1,
+      "20171230" : 1,
+      "20131227" : 1,
+      "20020706" : 1,
+      "20101028" : 1,
+      "20191226" : 1,
+      "20110706" : 1,
+      "20151227" : 1,
+      "20111117" : 1,
+      "20001028" : 1,
+      "20141229" : 1,
+      "20151225" : 1,
+      "20011231" : 1,
+      "20170501" : 1,
+      "20230410" : 1,
+      "20051221" : 1,
+      "20031224" : 1,
+      "20131225" : 1,
+      "20180101" : 1,
+      "20181231" : 1,
+      "20041228" : 1,
+      "20181224" : 1,
+      "20231117" : 1,
+      "20031117" : 1,
+      "20051222" : 1,
+      "20030501" : 1,
+      "20211230" : 1,
+      "20111224" : 1,
+      "20171228" : 1,
+      "20101224" : 1,
+      "20070409" : 1,
+      "20041117" : 1,
+      "20201117" : 1,
+      "20170417" : 1,
+      "20121224" : 1,
+      "20021230" : 1,
+      "20141226" : 1,
+      "20200501" : 1,
+      "20040101" : 1,
+      "20011225" : 1,
+      "20070928" : 1,
+      "20130706" : 1,
+      "20141231" : 1,
+      "20121117" : 1,
+      "20211227" : 1,
+      "20161226" : 1,
+      "20061227" : 1,
+      "20120501" : 1,
+      "20151230" : 1,
+      "20141230" : 1,
+      "20171222" : 1,
+      "20020705" : 1,
+      "20090501" : 1,
+      "20101225" : 1,
+      "20061117" : 1,
+      "20071028" : 1,
+      "20191225" : 1,
+      "20010705" : 1,
+      "20190928" : 1,
+      "20051228" : 1,
+      "20220508" : 1,
+      "20020508" : 1,
+      "20141228" : 1,
+      "20191231" : 1,
+      "20010508" : 1,
+      "20091117" : 1,
+      "20061028" : 1,
+      "20051224" : 1,
+      "20101227" : 1,
+      "20171224" : 1,
+      "20111028" : 1,
+      "20181227" : 1,
+      "20051227" : 1,
+      "20061224" : 1,
+      "20181028" : 1,
+      "20230101" : 1,
+      "20171028" : 1,
+      "20231226" : 1,
+      "20141227" : 1,
+      "20190706" : 1,
+      "20110425" : 1,
+      "20031229" : 1,
+      "20140421" : 1,
+      "20170414" : 1,
+      "20100928" : 1,
+      "20180402" : 1,
+      "20221028" : 1,
+      "20191229" : 1,
+      "20151117" : 1,
+      "20070501" : 1,
+      "20200410" : 1,
+      "20140508" : 1,
+      "20141223" : 1,
+      "20031225" : 1,
+      "20031222" : 1,
+      "20001229" : 1,
+      "20161228" : 1,
+      "20201228" : 1,
+      "20200706" : 1,
+      "20091226" : 1,
+      "20060501" : 1,
+      "20141225" : 1,
+      "20040706" : 1,
+      "20131226" : 1,
+      "20021225" : 1,
+      "20081225" : 1,
+      "20020501" : 1,
+      "20051028" : 1,
+      "20160508" : 1,
+      "20071231" : 1,
+      "20020928" : 1,
+      "20191224" : 1,
+      "20120928" : 1,
+      "20061228" : 1,
+      "20040412" : 1,
+      "20001227" : 1,
+      "20190419" : 1,
+      "20061225" : 1,
+      "20091225" : 1,
+      "20181230" : 1,
+      "20170928" : 1,
+      "20010101" : 1,
+      "20060706" : 1,
+      "20211228" : 1,
+      "20221231" : 1,
+      "20190101" : 1,
+      "20091224" : 1,
+      "20120409" : 1,
+      "20011226" : 1,
+      "20090101" : 1,
+      "20221228" : 1,
+      "20110508" : 1,
+      "20210508" : 1,
+      "20011028" : 1,
+      "20230928" : 1,
+      "20231224" : 1,
+      "20170508" : 1,
+      "20081028" : 1,
+      "20030101" : 1,
+      "20061230" : 1,
+      "20201231" : 1,
+      "20231028" : 1,
+      "20071227" : 1,
+      "20211225" : 1,
+      "20161223" : 1,
+      "20210501" : 1,
+      "20160928" : 1,
+      "20071221" : 1,
+      "20140705" : 1,
+      "20121028" : 1,
+      "20051223" : 1,
+      "20131228" : 1,
+      "20010501" : 1,
+      "20211028" : 1,
+      "20150101" : 1,
+      "20090928" : 1,
+      "20101228" : 1,
+      "20011224" : 1,
+      "20030706" : 1,
+      "20050706" : 1,
+      "20210402" : 1,
+      "20041227" : 1,
+      "20231231" : 1,
+      "20140706" : 1,
+      "20120101" : 1,
+      "20021117" : 1,
+      "20140101" : 1,
+      "20130501" : 1,
+      "20221226" : 1,
+      "20100101" : 1,
+      "20141222" : 1,
+      "20051229" : 1,
+      "20171226" : 1,
+      "20131229" : 1,
+      "20230706" : 1,
+      "20150406" : 1,
+      "20061229" : 1,
+      "20110928" : 1,
+      "20191223" : 1,
+      "20071228" : 1,
+      "20171227" : 1,
+      "20230407" : 1,
+      "20021227" : 1,
+      "20041231" : 1,
+      "20031028" : 1,
+      "20190422" : 1,
+      "20221229" : 1,
+      "20111226" : 1,
+      "20030508" : 1,
+      "20171229" : 1,
+      "20211231" : 1,
+      "20041224" : 1,
+      "20211226" : 1,
+      "20180508" : 1,
+      "20171117" : 1,
+      "20101223" : 1,
+      "20160325" : 1,
+      "20011228" : 1,
+      "20150705" : 1,
+      "20071225" : 1,
+      "20030705" : 1,
+      "20220101" : 1,
+      "20231229" : 1,
+      "20001225" : 1,
+      "20230501" : 1,
+      "20161230" : 1,
+      "20021231" : 1,
+      "20021028" : 1,
+      "20051117" : 1,
+      "20171231" : 1,
+      "20010928" : 1,
+      "20010416" : 1,
+      "20220418" : 1,
+      "20180501" : 1,
+      "20161224" : 1,
+      "20041028" : 1,
+      "20180706" : 1,
+      "20091028" : 1,
+      "20181228" : 1,
+      "20030928" : 1,
+      "20080928" : 1,
+      "20071229" : 1,
+      "20211229" : 1,
+      "20231225" : 1,
+      "20221117" : 1,
+      "20181117" : 1,
+      "20071226" : 1,
+      "20211117" : 1,
+      "20050328" : 1,
+      "20031231" : 1,
+      "20131223" : 1,
+      "20060705" : 1,
+      "20160705" : 1,
+      "20031223" : 1,
+      "20220706" : 1,
+      "20110501" : 1,
+      "20190508" : 1,
+      "20210706" : 1,
+      "20130508" : 1,
+      "20150501" : 1,
+      "20160328" : 1,
+      "20210405" : 1,
+      "20210705" : 1,
+      "20051230" : 1,
+      "20040501" : 1,
+      "20191230" : 1,
+      "20151028" : 1,
+      "20020401" : 1,
+      "20050508" : 1,
+      "20011227" : 1,
+      "20090508" : 1,
+      "20151224" : 1,
+      "20130928" : 1,
+      "20100706" : 1,
+      "20151228" : 1,
+      "20231227" : 1,
+      "20181225" : 1,
+      "20031226" : 1
+   },
+   "ldb" : {
+      "error_msg" : "Nesprávný formát.",
+      "error_msg_number_natural" : "Očekáváno přirozené číslo (1,&nbsp;2,&nbsp;3,&nbsp;&hellip;).",
+      "odstranit" : "Odstranit",
+      "error_msg_max" : "Text je příliš dlouhý.",
+      "error_msg_min" : "Text je příliš krátký.",
+      "rozbalit" : "Rozbalit",
+      "error_msg_number_natural_zero" : "Očekáváno přirozené číslo nebo nula (0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;&hellip;).",
+      "error_msg_min_val" : "Číslo je menší než povolená hodnota.",
+      "error_msg_number_integer" : "Očekáváno celé číslo (&hellip;,&nbsp;-2,&nbsp;-1,&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;&hellip;).",
+      "pripnout" : "Připnout menu",
+      "error_msg_alpha" : "Smí obsahovat pouze znaky abecedy, mezeru, podtržítko a spojovník.",
+      "byl_jste_odhlasen_zavrit" : "Zavřít",
+      "chyba" : "Došlo k chybě, operaci opakujte nebo obnovte stránku.",
+      "upravit" : "Upravit",
+      "error_msg_email" : "Nesprávný tvar e-mailové adresy",
+      "error_msg_required" : "Povinný údaj.",
+      "byl_jste_odhlasen" : "Byl jste odhlášen.",
+      "sbalit" : "Sbalit",
+      "error_msg_uc_first" : "Musí začínat velkým počátečním písmenem.",
+      "byl_jste_odhlasen_prihlasit" : "Přihlásit",
+      "error_msg_required_any" : "Alespoň jeden údaj musí být vyplněn.",
+      "error_msg_alpha_numeric" : "Smí obsahovat pouze znaky abecedy, číslo, mezeru, podtržítko a spojovník.",
+      "isForms_invalid" : "Chybně vyplněné údaje, prosím zkontrolujte.",
+      "error_msg_datepicker_max_date" : "Datum a čas nelze takto nastavit.",
+      "error_msg_max_val" : "Číslo je větší než povolená hodnota.",
+      "error_msg_required_all" : "Všechny údaje jsou povinné.",
+      "odepnout" : "Odepnout menu",
+      "error_msg_datepicker_min_date" : "Datum a čas nelze takto nastavit.",
+      "error_msg_zalozka_url" : "Nesprávný tvar adresy."
+   },
+   "js_init" : [
+      {
+         "params" : [],
+         "method" : "init",
+         "module" : "Forms"
+      },
+      {
+         "method" : "init",
+         "module" : "Rozvrh",
+         "params" : []
+      },
+      {
+         "params" : [
+            {
+               "start_date" : null,
+               "hodiny_minuty" : null,
+               "zvyraznit" : {},
+               "id" : "prvek_46956",
+               "end_date" : null
+            }
+         ],
+         "module" : "FDatePicker",
+         "method" : "init"
+      },
+      {
+         "params" : [
+            {
+               "id" : "prvek_1565593",
+               "end_date" : null,
+               "start_date" : null,
+               "hodiny_minuty" : null,
+               "zvyraznit" : {}
+            }
+         ],
+         "module" : "FDatePicker",
+         "method" : "init"
+      },
+      {
+         "module" : "Rozklikavatko",
+         "method" : "init",
+         "params" : []
+      },
+      {
+         "params" : [],
+         "method" : "init",
+         "module" : "Oblibene"
+      },
+      {
+         "module" : "NavMenu",
+         "method" : "init",
+         "params" : []
+      },
+      {
+         "params" : [],
+         "method" : "init",
+         "module" : "HashNavigation"
+      },
+      {
+         "method" : "init",
+         "module" : "Drobecky",
+         "params" : []
+      },
+      {
+         "params" : [],
+         "module" : "AppMenu",
+         "method" : "init"
+      },
+      {
+         "method" : "init_header",
+         "module" : "Design",
+         "params" : []
+      },
+      {
+         "params" : [],
+         "method" : "init_toolkit",
+         "module" : "Design"
+      }
+   ]
+}
+);
+})();
+</script>
+
+</body>
+</html>

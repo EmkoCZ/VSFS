@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Info"
+             x:Class="vsfs.Views.InfoPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame>
+                <Label Text="Info" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </Frame>
+            <Label Text="Simple app made by Marek Nejedlý for VŠFS"
+                HorizontalOptions="CenterAndExpand" />
+            <Frame>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Debug Mode" FontSize="15" FontAttributes="Bold"/>
+                    <Button Text="Debug Page" Clicked="Button_Clicked" VerticalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
