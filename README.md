@@ -40,11 +40,11 @@ You no longer have to keep in mind if it's even or odd week. My app does that fo
 In progress classes are highlighted so you can check immediately where to go! Duration of every subject is also mentioned in the timetable.
 I also made sure to make a simple keep signed in feature, so you don't have to log in every time.
 
-<!-- GETTING STARTED -->
-## Getting Started
+<!-- GETTING STARTED / INSTALATION -->
+## Getting Started / Installation
 
-You can either build the app for yourself or you can download it for <a href="https://github.com/EmkoCZ/VSFS/releases/tag/Beta">Android here</a>.
-I do not know how to compile this project for IOS so you'll have to do it yourself. All the needed source code is here.
+You can either build the app for yourself or you can download it <a href="https://github.com/EmkoCZ/VSFS/releases/tag/Beta">here for Android</a>.<br>
+If you want this app on **IOS**, you'll have to compile it yourself since I do not own a mac. All needed code is here, so feel free to do so.
 
 <!-- SECURITY -->
 ## Security - Password and Username
@@ -68,3 +68,8 @@ Here's what you can read from my timetable:
 
 Maybe, I probably want to add at least one more feature which is callendar. Then try to optimize the app a little bit more and that'll be probs it.
 I might update some features meanwhile.
+
+<!--CONTACT -->
+## Need to talk to me or want to ask some questions?
+
+Add me on Discord: **EmkoCZです#0001**
