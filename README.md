@@ -46,6 +46,12 @@ I also made sure to make a simple keep signed in feature, so you don't have to l
 You can either build the app for yourself or you can download it <a href="https://github.com/EmkoCZ/VSFS/releases/tag/Beta">here for Android</a>.<br>
 If you want this app on **IOS**, you'll have to compile it yourself since I do not own a mac. All needed code is here, so feel free to do so.
 
+<!-- UPDATING -->
+## Updating the app
+
+Once a new version comes out, all you need to do is download the apk file and open it. Your phone will ask you if you want to update the app, just click yes
+and that's it!
+
 <!-- SECURITY -->
 ## Security - Password and Username
 
