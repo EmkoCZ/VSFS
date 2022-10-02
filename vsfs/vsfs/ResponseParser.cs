@@ -13,6 +13,7 @@ namespace vsfs
     {
         public static List<string> response { get; set; }
         public static List<TimetableModel> timetableModels { get; set; }
+        public static List<TimetableModel> timetableModelsPreview { get; set; }
 
         public static async Task parseDataIntoListAsync(HttpWebResponse webResponse)
         {
@@ -229,7 +230,76 @@ namespace vsfs
                 Console.WriteLine("ERROR " + err.Message);
                 Console.WriteLine("ERR STACK " + err.StackTrace);
             }
-            
+        }
+
+        public static async Task PopulateTimetablePreview()
+        {
+            try
+            {
+                if (timetableModelsPreview == null)
+                    timetableModelsPreview = new List<TimetableModel>();
+
+                List<string> codes = await GetSubjectCodesAsync();
+                List<string> names = await GetSubjectNamesAsync();
+                List<string> teachers = await GetSubjectTeachersAsync();
+                List<string> rooms = await GetSubjectRoomsAsync();
+                List<string> times = await GetSubjectTimesAsync();
+                List<int> days = await GetSubjectDaysAsync();
+
+
+                CultureInfo cultureInfo = new CultureInfo("cs-CZ");
+                Calendar calendar = cultureInfo.Calendar;
+
+                if ((calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) + 1) % 2 == 0)
+                {
+                    codes.RemoveRange(8, 2);
+                    codes.RemoveRange(8, 10);
+                    names.RemoveRange(8, 2);
+                    names.RemoveRange(8, 10);
+                    teachers.RemoveRange(8, 2);
+                    teachers.RemoveRange(8, 10);
+                    rooms.RemoveRange(8, 2);
+                    rooms.RemoveRange(8, 10);
+                    times.RemoveRange(8, 2);
+                    times.RemoveRange(8, 10);
+                    days.RemoveRange(8, 2);
+                    days.RemoveRange(8, 10);
+                }
+                else
+                {
+                    codes.RemoveRange(4, 4);
+                    codes.RemoveRange(6, 10);
+                    names.RemoveRange(4, 4);
+                    names.RemoveRange(6, 10);
+                    teachers.RemoveRange(4, 4);
+                    teachers.RemoveRange(6, 10);
+                    rooms.RemoveRange(4, 4);
+                    rooms.RemoveRange(6, 10);
+                    times.RemoveRange(4, 4);
+                    times.RemoveRange(6, 10);
+                    days.RemoveRange(4, 4);
+                    days.RemoveRange(6, 10);
+                }
+
+                for (int i = 0; i < codes.Count - 1; i++)
+                {
+                    int col = await GetSubjectColumAsync(times[i]);
+                    string type = codes[i];
+                    string name = names[i];
+                    string teacher = teachers[i];
+                    string room = rooms[i];
+                    string time = times[i];
+                    int row = days[i];
+
+                    timetableModelsPreview.Add(new TimetableModel { type = type, name = name, teacher = teacher, room = room, time = time, colum = col, row = row });
+                }
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("ERROR " + err.Message);
+                Console.WriteLine("ERR STACK " + err.StackTrace);
+            }
+
         }
     }
 }

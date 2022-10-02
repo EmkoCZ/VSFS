@@ -74,7 +74,7 @@ namespace vsfs.Views
                     Application.Current.Properties.Remove("sign");
                 }
 
-                await Shell.Current.GoToAsync("Timetable");
+                await Shell.Current.GoToAsync($"//{nameof(Timetable)}");
             }
             catch (Exception err)
             {

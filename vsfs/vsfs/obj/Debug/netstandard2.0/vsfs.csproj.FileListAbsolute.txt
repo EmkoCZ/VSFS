@@ -2,7 +2,6 @@ D:\Programms\C#\vsfs\vsfs\vsfs\bin\Debug\netstandard2.0\vsfs.deps.json
 D:\Programms\C#\vsfs\vsfs\vsfs\bin\Debug\netstandard2.0\vsfs.dll
 D:\Programms\C#\vsfs\vsfs\vsfs\bin\Debug\netstandard2.0\ref\vsfs.dll
 D:\Programms\C#\vsfs\vsfs\vsfs\bin\Debug\netstandard2.0\vsfs.pdb
-D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\vsfs.csproj.AssemblyReference.cache
 D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\App.xaml.g.cs
 D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\AppShell.xaml.g.cs
 D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\Views\AboutPage.xaml.g.cs
@@ -20,3 +19,5 @@ D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\vsfs.pdb
 D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\Views\Timetable.xaml.g.cs
 D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\Views\DebugOutput.xaml.g.cs
 D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\Views\InfoPage.xaml.g.cs
+D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\vsfs.csproj.AssemblyReference.cache
+D:\Programms\C#\vsfs\vsfs\vsfs\obj\Debug\netstandard2.0\Views\TimetablePreview.xaml.g.cs

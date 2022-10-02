@@ -84,6 +84,9 @@
     <FlyoutItem Title="Timetable" Icon="icon_timetable.png">
         <ShellContent Route="Timetable" ContentTemplate="{DataTemplate local:Timetable}" />
     </FlyoutItem>
+    <FlyoutItem Title="Timetable Preview" Icon="icon_timetable.png">
+        <ShellContent Route="TimetablePreview" ContentTemplate="{DataTemplate local:TimetablePreview}" />
+    </FlyoutItem>
     <FlyoutItem Title="About App" Icon="icon_question.png">
         <ShellContent Route="InfoPage" ContentTemplate="{DataTemplate local:InfoPage}" />
     </FlyoutItem>

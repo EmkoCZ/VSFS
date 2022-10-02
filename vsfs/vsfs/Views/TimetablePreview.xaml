@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vsfs.Views.TimetablePreview"
+             Title="Timetable Preview"
+             xmlns:local="clr-namespace:vsfs.ViewModels"  
+             xmlns:model="clr-namespace:vsfs.Models"  
+             Padding="0,0,0,0"
+             x:Name="TimetablePage">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame>
+                <Label Text="Timetable" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </Frame>
+            <Label Text="Legenda" FontSize="17" Margin="5,10,230,0"/>
+            <Frame BackgroundColor="#ffae57" Margin="5,10,230,0">
+                <Label Text="Probíhající hodina"/>
+            </Frame>
+            <ActivityIndicator IsVisible="false" x:Name="loading"/>
+            <ScrollView Orientation="Both" x:Name="scView">
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

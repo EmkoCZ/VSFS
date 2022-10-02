@@ -11,12 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\" />
     <Folder Include="Sources\" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Views\Timetable.xaml.cs">
       <DependentUpon>Timetable.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TimetablePreview.xaml.cs">
+      <DependentUpon>TimetablePreview.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -28,6 +32,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Timetable.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TimetablePreview.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

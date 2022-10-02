@@ -21,15 +21,8 @@ namespace vsfs.Views
         public Timetable()
         {
             InitializeComponent();
-            //BindingContext = _tableModel = new TimetableModel();
             setUp();
         }
-
-        //protected override void OnAppearing()
-        //{
-        //    base.OnAppearing();
-        //    _tableModel.OnAppearing();
-        //}
 
         async void setUp()
         {
@@ -183,6 +176,8 @@ namespace vsfs.Views
             DateTime endTime = DateTime.ParseExact(model.time.Split('-')[1], "HH:mm",
                                         CultureInfo.InvariantCulture);
 
+            //Console.WriteLine("Day: " + await getDay());
+
             if ((DateTime.Now.TimeOfDay >= startTime.TimeOfDay) && (DateTime.Now.TimeOfDay <= endTime.TimeOfDay) && (model.row == await getDay()))
             {
                 return Color.FromHex("#ffae57");
@@ -203,7 +198,7 @@ namespace vsfs.Views
                 case "Wednesday":
                     return 2;
                 default:
-                    return 0;
+                    return 3;
             }
         }
     }
