@@ -137,7 +137,7 @@ namespace vsfs.Views
                 //    await Shell.Current.GoToAsync("DebugOutput");
                 //}
                 //else 
-                await Shell.Current.GoToAsync("Timetable");
+                await Shell.Current.GoToAsync($"//{nameof(Timetable)}");
             }
             catch (Exception err)
             {
