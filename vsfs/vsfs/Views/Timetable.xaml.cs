@@ -10,13 +10,14 @@ using vsfs.Models;
 using vsfs.Views;
 using vsfs.ViewModels;
 using System.Globalization;
+using System.Threading;
 
 namespace vsfs.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Timetable : ContentPage
     {
-        TimetableModel _tableModel;
+        List<StackLayout> subjects = new List<StackLayout>();
 
         public Timetable()
         {
@@ -31,6 +32,18 @@ namespace vsfs.Views
                 loading.IsVisible = true;
                 loading.IsRunning = true;
                 await createGrid();
+
+                if(await ResponseParser.GetWeekType() == 2)
+                {
+                    tyden.Text = tyden.Text.Split(' ')[0] + " Sudý";
+                } else
+                {
+                    tyden.Text = tyden.Text.Split(' ')[0] + " Lichý";
+                }
+
+                den.Text = den.Text.Split(' ')[0] + " " + await getDayName();
+                datum.Text = datum.Text.Split(' ')[0] + " " + DateTime.Now.ToString("dd.MM.");
+
                 loading.IsVisible = false;
                 loading.IsRunning = false;
             }
@@ -87,7 +100,7 @@ namespace vsfs.Views
                 grid.Children.Add(new Label { Text = days[i].dayName, FontSize = 20, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center, TextColor = Color.White }, 0, i);
             }
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 12; i++)
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition
                 {
@@ -115,6 +128,8 @@ namespace vsfs.Views
                         Padding = new Thickness(5, 0, 0, 0),
                         Spacing = 0
                     };
+
+                    subjects.Add(stackLayout);
 
                     var subType = new Label
                     {
@@ -200,6 +215,34 @@ namespace vsfs.Views
                 default:
                     return 3;
             }
+        }
+
+        public async Task<string> getDayName()
+        {
+            string day = DateTime.Now.DayOfWeek.ToString();
+
+            switch (day)
+            {
+                case "Monday":
+                    return "Pondělí";
+                case "Tuesday":
+                    return "Úterý";
+                case "Wednesday":
+                    return "Středa";
+                default:
+                    return "Mimo výuku";
+            }
+        }
+
+        private async void refresh(object sender, EventArgs e)
+        {
+            for (int i = 0; i < subjects.Count; i++)
+            {
+                TimetableModel model = ResponseParser.timetableModels[i];
+                subjects[i].BackgroundColor = await getSubjectColor(model);
+            }
+            //await DisplayAlert("Timetable Refresh", "Refreshed the timetable", "Great");
+            //Console.WriteLine("Refresh");
         }
     }
 }

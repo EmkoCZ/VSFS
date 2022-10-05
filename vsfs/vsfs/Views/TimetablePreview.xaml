@@ -11,14 +11,27 @@
     <ContentPage.Content>
         <StackLayout>
             <Frame>
-                <Label Text="Timetable" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Label Text="Timetable Preview" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
             </Frame>
-            <Label Text="Legenda" FontSize="17" Margin="5,10,230,0"/>
-            <Frame BackgroundColor="#ffae57" Margin="5,10,230,0">
-                <Label Text="Probíhající hodina"/>
-            </Frame>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout>
+                    <Label Text="Legenda" FontSize="17" Margin="5,10,0,0"/>
+                    <Frame BackgroundColor="#ffae57" Margin="5,10,0,0">
+                        <Label Text="Probíhající hodina"/>
+                    </Frame>
+                </StackLayout>
+                <StackLayout Margin="30,10,50,0">
+                    <Label Text="Informace" FontSize="17"/>
+                    <Label x:Name="tyden" Text="Týden: lichy"/>
+                </StackLayout>
+            </StackLayout>
+            <Image Source="icon_reload.png" Margin="0,20,0,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="refresh"/>
+                </Image.GestureRecognizers>
+            </Image>
             <ActivityIndicator IsVisible="false" x:Name="loading"/>
-            <ScrollView Orientation="Both" x:Name="scView">
+            <ScrollView Orientation="Both" x:Name="scView" Margin="0,-15,0,0">
             </ScrollView>
         </StackLayout>
     </ContentPage.Content>

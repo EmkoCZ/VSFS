@@ -164,6 +164,31 @@ namespace vsfs
             return days;
         }
 
+        public static async Task<int> GetWeekType()
+        {
+            CultureInfo cultureInfo = new CultureInfo("cs-CZ");
+            Calendar calendar = cultureInfo.Calendar;
+
+            if (calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) % 2 == 0)
+            {
+                return 2;
+            }
+            else return 1;
+        }
+
+        public static async Task<int> GetWeekTypePreview()
+        {
+            CultureInfo cultureInfo = new CultureInfo("cs-CZ");
+            Calendar calendar = cultureInfo.Calendar;
+
+            if ((calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) + 1) % 2 == 0)
+            {
+                return 2;
+            }
+            else return 1;
+        }
+
+
         public static async Task PopulateTimetable()
         {
             try
@@ -212,7 +237,7 @@ namespace vsfs
                     days.RemoveRange(6, 10);
                 }
 
-                for (int i = 0; i < codes.Count-1; i++)
+                for (int i = 0; i < codes.Count; i++)
                 {
                     int col = await GetSubjectColumAsync(times[i]);
                     string type = codes[i];
@@ -281,7 +306,7 @@ namespace vsfs
                     days.RemoveRange(6, 10);
                 }
 
-                for (int i = 0; i < codes.Count - 1; i++)
+                for (int i = 0; i < codes.Count; i++)
                 {
                     int col = await GetSubjectColumAsync(times[i]);
                     string type = codes[i];
