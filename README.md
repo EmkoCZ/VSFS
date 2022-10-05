@@ -43,7 +43,7 @@ I also made sure to make a simple keep signed in feature, so you don't have to l
 <!-- GETTING STARTED / INSTALATION -->
 ## Getting Started / Installation
 
-You can either build the app for yourself or you can download it <a href="https://github.com/EmkoCZ/VSFS/releases/tag/Beta">here for Android</a>.<br>
+You can either build the app for yourself or you can download it <a href="https://github.com/EmkoCZ/VSFS/releases/tag/V1.1.5">here for Android</a>.<br>
 Minimum Android version is **5.0**. <br>
 If you want this app on **IOS**, you'll have to compile it yourself since I do not own a mac. All needed code is here, so feel free to do so.
 
