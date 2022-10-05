@@ -18,17 +18,17 @@ namespace vsfs.Views
         public DebugOutput()
         {
             InitializeComponent();
-            setUp();
+            //setUp();
         }
 
         async void setUp()
         {
-            string code = "";
-            foreach (var item in ResponseParser.response)
-            {
-                code += item + "\n";
-            }
-            view.Text = code;
+            //string code = "";
+            //foreach (var item in ResponseParser.response)
+            //{
+            //    code += item + "\n";
+            //}
+            //view.Text = code;
         }
     }
 }
