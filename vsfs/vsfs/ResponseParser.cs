@@ -141,6 +141,8 @@ namespace vsfs
                     return 11;
                 case "18:15-19:00":
                     return 12;
+                case "12:15-13:45":
+                    return 5;
                 default:
                     return 0;
             }
@@ -207,34 +209,64 @@ namespace vsfs
                 CultureInfo cultureInfo = new CultureInfo("cs-CZ");
                 Calendar calendar = cultureInfo.Calendar;
 
-                if(calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) % 2 == 0)
+                if(Int32.Parse(DateTime.Now.ToString("dd")) <= 10 && Int32.Parse(DateTime.Now.ToString("MM")) <= 10)
                 {
-                    codes.RemoveRange(8, 2);
-                    codes.RemoveRange(8, 10);
-                    names.RemoveRange(8, 2);
-                    names.RemoveRange(8, 10);
-                    teachers.RemoveRange(8, 2);
-                    teachers.RemoveRange(8, 10);
-                    rooms.RemoveRange(8, 2);
-                    rooms.RemoveRange(8, 10);
-                    times.RemoveRange(8, 2);
-                    times.RemoveRange(8, 10);
-                    days.RemoveRange(8, 2);
-                    days.RemoveRange(8, 10);
+                    if (calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) % 2 == 0)
+                    {
+                        codes.RemoveAt(4);
+                        codes.RemoveRange(8, 13);
+                        names.RemoveAt(4);
+                        names.RemoveRange(8, 13);
+                        teachers.RemoveAt(4);
+                        teachers.RemoveRange(8, 13);
+                        rooms.RemoveAt(4);
+                        rooms.RemoveRange(8, 13);
+                        times.RemoveAt(4);
+                        times.RemoveRange(8, 13);
+                        days.RemoveAt(4);
+                        days.RemoveRange(8, 13);
+                    }
+                    else
+                    {
+                        codes.RemoveRange(9, 13);
+                        names.RemoveRange(9, 13);
+                        teachers.RemoveRange(9, 13);
+                        rooms.RemoveRange(9, 13);
+                        times.RemoveRange(9, 13);
+                        days.RemoveRange(9, 13);
+                    }
                 } else
                 {
-                    codes.RemoveRange(4, 4);
-                    codes.RemoveRange(6, 10);
-                    names.RemoveRange(4, 4);
-                    names.RemoveRange(6, 10);
-                    teachers.RemoveRange(4, 4);
-                    teachers.RemoveRange(6, 10);
-                    rooms.RemoveRange(4, 4);
-                    rooms.RemoveRange(6, 10);
-                    times.RemoveRange(4, 4);
-                    times.RemoveRange(6, 10);
-                    days.RemoveRange(4, 4);
-                    days.RemoveRange(6, 10);
+                    if (calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) % 2 == 0)
+                    {
+                        codes.RemoveRange(8, 2);
+                        codes.RemoveRange(8, 10);
+                        names.RemoveRange(8, 2);
+                        names.RemoveRange(8, 10);
+                        teachers.RemoveRange(8, 2);
+                        teachers.RemoveRange(8, 10);
+                        rooms.RemoveRange(8, 2);
+                        rooms.RemoveRange(8, 10);
+                        times.RemoveRange(8, 2);
+                        times.RemoveRange(8, 10);
+                        days.RemoveRange(8, 2);
+                        days.RemoveRange(8, 10);
+                    }
+                    else
+                    {
+                        codes.RemoveRange(4, 4);
+                        codes.RemoveRange(6, 10);
+                        names.RemoveRange(4, 4);
+                        names.RemoveRange(6, 10);
+                        teachers.RemoveRange(4, 4);
+                        teachers.RemoveRange(6, 10);
+                        rooms.RemoveRange(4, 4);
+                        rooms.RemoveRange(6, 10);
+                        times.RemoveRange(4, 4);
+                        times.RemoveRange(6, 10);
+                        days.RemoveRange(4, 4);
+                        days.RemoveRange(6, 10);
+                    }
                 }
 
                 for (int i = 0; i < codes.Count; i++)
@@ -275,36 +307,73 @@ namespace vsfs
                 CultureInfo cultureInfo = new CultureInfo("cs-CZ");
                 Calendar calendar = cultureInfo.Calendar;
 
-                if ((calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) + 1) % 2 == 0)
+                if(Int32.Parse(DateTime.Now.ToString("dd")) <= 10 && Int32.Parse(DateTime.Now.ToString("MM")) <= 10)
                 {
-                    codes.RemoveRange(8, 2);
-                    codes.RemoveRange(8, 10);
-                    names.RemoveRange(8, 2);
-                    names.RemoveRange(8, 10);
-                    teachers.RemoveRange(8, 2);
-                    teachers.RemoveRange(8, 10);
-                    rooms.RemoveRange(8, 2);
-                    rooms.RemoveRange(8, 10);
-                    times.RemoveRange(8, 2);
-                    times.RemoveRange(8, 10);
-                    days.RemoveRange(8, 2);
-                    days.RemoveRange(8, 10);
-                }
-                else
+                    if ((calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) + 1) % 2 == 0)
+                    {
+                        codes.RemoveRange(8, 2);
+                        codes.RemoveRange(8, 10);
+                        names.RemoveRange(8, 2);
+                        names.RemoveRange(8, 10);
+                        teachers.RemoveRange(8, 2);
+                        teachers.RemoveRange(8, 10);
+                        rooms.RemoveRange(8, 2);
+                        rooms.RemoveRange(8, 10);
+                        times.RemoveRange(8, 2);
+                        times.RemoveRange(8, 10);
+                        days.RemoveRange(8, 2);
+                        days.RemoveRange(8, 10);
+                    }
+                    else
+                    {
+                        codes.RemoveRange(4, 5);
+                        codes.RemoveRange(6, 11);
+                        names.RemoveRange(4, 5);
+                        names.RemoveRange(6, 11);
+                        teachers.RemoveRange(4, 5);
+                        teachers.RemoveRange(6, 11);
+                        rooms.RemoveRange(4, 5);
+                        rooms.RemoveRange(6, 11);
+                        times.RemoveRange(4, 5);
+                        times.RemoveRange(6, 11);
+                        days.RemoveRange(4, 5);
+                        days.RemoveRange(6, 11);
+                    }
+                } else
                 {
-                    codes.RemoveRange(4, 4);
-                    codes.RemoveRange(6, 10);
-                    names.RemoveRange(4, 4);
-                    names.RemoveRange(6, 10);
-                    teachers.RemoveRange(4, 4);
-                    teachers.RemoveRange(6, 10);
-                    rooms.RemoveRange(4, 4);
-                    rooms.RemoveRange(6, 10);
-                    times.RemoveRange(4, 4);
-                    times.RemoveRange(6, 10);
-                    days.RemoveRange(4, 4);
-                    days.RemoveRange(6, 10);
+                    if ((calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) + 1) % 2 == 0)
+                    {
+                        codes.RemoveRange(8, 2);
+                        codes.RemoveRange(8, 10);
+                        names.RemoveRange(8, 2);
+                        names.RemoveRange(8, 10);
+                        teachers.RemoveRange(8, 2);
+                        teachers.RemoveRange(8, 10);
+                        rooms.RemoveRange(8, 2);
+                        rooms.RemoveRange(8, 10);
+                        times.RemoveRange(8, 2);
+                        times.RemoveRange(8, 10);
+                        days.RemoveRange(8, 2);
+                        days.RemoveRange(8, 10);
+                    }
+                    else
+                    {
+                        codes.RemoveRange(4, 4);
+                        codes.RemoveRange(6, 10);
+                        names.RemoveRange(4, 4);
+                        names.RemoveRange(6, 10);
+                        teachers.RemoveRange(4, 4);
+                        teachers.RemoveRange(6, 10);
+                        rooms.RemoveRange(4, 4);
+                        rooms.RemoveRange(6, 10);
+                        times.RemoveRange(4, 4);
+                        times.RemoveRange(6, 10);
+                        days.RemoveRange(4, 4);
+                        days.RemoveRange(6, 10);
+                    }
                 }
+
+                
 
                 for (int i = 0; i < codes.Count; i++)
                 {
